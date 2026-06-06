@@ -14,7 +14,7 @@ from database import (
 from keyboards.inline import admin_panel_keyboard, back_to_main_keyboard, admin_ban_keyboard
 from config import ADMIN_IDS
 
-# ---------- FSM для выдачи подписки ----------
+# ---------- FSM для выдачи подписки через кнопки ----------
 class GiveSubscriptionState(StatesGroup):
     waiting_user_id = State()
     waiting_days = State()
@@ -26,18 +26,22 @@ class CreatePromoState(StatesGroup):
     waiting_max_uses = State()
     waiting_expiry = State()
 
-# ---------- Главная админ-панель (callback) ----------
+# ---------- FSM для массовой рассылки ----------
+class BroadcastState(StatesGroup):
+    waiting_message = State()
+
+# ---------- Главная админ-панель ----------
 async def admin_panel(message: types.Message):
     if message.from_user.id not in ADMIN_IDS:
         await message.answer("❌ У вас нет доступа к админ-панели.")
         return
     await message.answer("👑 Админ-панель", reply_markup=admin_panel_keyboard())
 
-async def admin_callback(callback: types.CallbackQuery):
+async def admin_callback(callback: types.CallbackQuery, state: FSMContext):
     if callback.from_user.id not in ADMIN_IDS:
         await callback.answer("Нет доступа", show_alert=True)
         return
-    action = callback.data.split("_")[1]  # users, payments, stats, campaigns, promos, ban_menu, give_sub
+    action = callback.data.split("_")[1]  # users, payments, stats, campaigns, promos, ban_menu, give_sub, broadcast
 
     if action == "users":
         users = await get_all_users()
@@ -82,17 +86,16 @@ async def admin_callback(callback: types.CallbackQuery):
     elif action == "give_sub":
         await give_subscription_start(callback)
 
+    elif action == "broadcast":
+        await callback.message.answer("📢 Введите текст сообщения для массовой рассылки (можно с эмодзи):")
+        await BroadcastState.waiting_message.set()
+        await callback.answer()
+
     else:
         await callback.message.edit_text("Неизвестная команда", reply_markup=back_to_main_keyboard())
     await callback.answer()
 
 # ---------- Блокировка / разблокировка ----------
-async def ban_menu(callback: types.CallbackQuery):
-    if callback.from_user.id not in ADMIN_IDS:
-        await callback.answer("Нет доступа")
-        return
-    await callback.message.edit_text("🔒 Управление блокировкой пользователей:", reply_markup=admin_ban_keyboard())
-
 async def ban_user_start(callback: types.CallbackQuery, state: FSMContext):
     await callback.message.answer("Введите Telegram ID пользователя для блокировки:")
     await state.set_state("wait_ban_user_id")
@@ -119,7 +122,7 @@ async def process_unban_user(message: types.Message, state: FSMContext):
         await message.answer(f"❌ Ошибка: {e}")
     await state.finish()
 
-# ---------- Выдача подписки вручную (через кнопку) ----------
+# ---------- Выдача подписки через кнопки ----------
 async def give_subscription_start(callback: types.CallbackQuery):
     await callback.message.answer("Введите Telegram ID пользователя:")
     await GiveSubscriptionState.waiting_user_id.set()
@@ -152,6 +155,21 @@ async def give_subscription_days(message: types.Message, state: FSMContext):
         await message.answer(f"❌ Ошибка: {e}")
     finally:
         await state.finish()
+
+# ---------- Массовая рассылка через кнопку ----------
+async def broadcast_message(message: types.Message, state: FSMContext):
+    text = message.text
+    users = await get_all_users()
+    count = 0
+    for user in users:
+        try:
+            await message.bot.send_message(chat_id=user.tg_user_id, text=text)
+            count += 1
+            await asyncio.sleep(0.05)
+        except:
+            pass
+    await message.answer(f"✅ Сообщение отправлено {count} пользователям.")
+    await state.finish()
 
 # ---------- Промокоды ----------
 async def promo_codes_menu(callback: types.CallbackQuery):
@@ -209,7 +227,7 @@ async def create_promo_expiry(message: types.Message, state: FSMContext):
     await message.answer(f"✅ Промокод `{promo.code}` создан!\nДаёт {promo.days} дней, максимум {promo.max_uses} активаций.\nДействует до: {promo.expires_at.strftime('%d.%m.%Y') if promo.expires_at else 'бессрочно'}", parse_mode="Markdown")
     await state.finish()
 
-# ---------- Команда активации промокода для пользователя ----------
+# ---------- Команда для активации промокода пользователем ----------
 async def activate_promo(message: types.Message):
     args = message.get_args()
     if not args:
@@ -239,7 +257,7 @@ async def activate_promo(message: types.Message):
     await update_subscription(message.from_user.id, new_end)
     await message.answer(f"✅ Промокод активирован! Подписка продлена на {days} дней.\nНовая дата окончания: {new_end.strftime('%d.%m.%Y')}")
 
-# ---------- Другие админ-команды ----------
+# ---------- Сброс статуса рассылки (команда, но можно и кнопкой) ----------
 async def reset_campaign(message: types.Message):
     if message.from_user.id not in ADMIN_IDS:
         return
@@ -254,52 +272,10 @@ async def reset_campaign(message: types.Message):
     except Exception as e:
         await message.answer(f"❌ Ошибка: {e}")
 
-async def extend_subscription(message: types.Message):
-    if message.from_user.id not in ADMIN_IDS:
-        await message.answer("❌ У вас нет прав.")
-        return
-    args = message.get_args().split()
-    if len(args) != 2:
-        await message.answer("Использование: /extend <user_id> <дни>\nПример: /extend 123456789 30")
-        return
-    try:
-        user_id = int(args[0])
-        days = int(args[1])
-        user = await get_user(user_id)
-        if not user:
-            await message.answer(f"❌ Пользователь с ID {user_id} не найден. Попросите его написать /start.")
-            return
-        new_end = datetime.datetime.utcnow() + datetime.timedelta(days=days)
-        await update_subscription(user_id, new_end)
-        # Получаем обновлённые данные
-        updated_user = await get_user(user_id)
-        await message.answer(f"✅ Подписка пользователя {user_id} продлена на {days} дней.\nНовая дата окончания: {updated_user.subscription_end.strftime('%d.%m.%Y %H:%M')}")
-    except Exception as e:
-        await message.answer(f"❌ Ошибка: {e}")
-
-async def broadcast(message: types.Message):
-    if message.from_user.id not in ADMIN_IDS:
-        return
-    text = message.get_args()
-    if not text:
-        await message.answer("Использование: /broadcast <текст сообщения>")
-        return
-    users = await get_all_users()
-    count = 0
-    for user in users:
-        try:
-            await message.bot.send_message(chat_id=user.tg_user_id, text=text)
-            count += 1
-            await asyncio.sleep(0.05)
-        except:
-            pass
-    await message.answer(f"✅ Сообщение отправлено {count} пользователям.")
-
 # ---------- Регистрация всех обработчиков ----------
 def register_handlers(dp: Dispatcher):
     dp.register_message_handler(admin_panel, Command("admin"))
-    dp.register_callback_query_handler(admin_callback, Text(startswith="admin_"))
-    dp.register_callback_query_handler(ban_menu, text="admin_ban_menu")
+    dp.register_callback_query_handler(admin_callback, Text(startswith="admin_"), state=None)
     dp.register_callback_query_handler(ban_user_start, text="admin_ban_user")
     dp.register_callback_query_handler(unban_user_start, text="admin_unban_user")
     dp.register_message_handler(process_ban_user, state="wait_ban_user_id")
@@ -318,5 +294,7 @@ def register_handlers(dp: Dispatcher):
 
     dp.register_message_handler(activate_promo, Command("promo"))
     dp.register_message_handler(reset_campaign, Command("reset_campaign"))
-    dp.register_message_handler(extend_subscription, Command("extend"))
-    dp.register_message_handler(broadcast, Command("broadcast"))
+
+    # Массовая рассылка
+    dp.register_callback_query_handler(admin_callback, Text(startswith="admin_broadcast"), state=None)
+    dp.register_message_handler(broadcast_message, state=BroadcastState.waiting_message)

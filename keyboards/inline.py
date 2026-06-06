@@ -108,6 +108,7 @@ def admin_panel_keyboard():
         InlineKeyboardButton("🎁 Промокоды", callback_data="admin_promos"),
         InlineKeyboardButton("🔒 Блокировка", callback_data="admin_ban_menu"),
         InlineKeyboardButton("📅 Выдать подписку", callback_data="admin_give_sub"),
+        InlineKeyboardButton("📢 Массовая рассылка", callback_data="admin_broadcast"),  # <-- новая кнопка
         InlineKeyboardButton("◀️ Назад", callback_data="main_menu")
     )
     return kb
