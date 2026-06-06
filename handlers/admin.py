@@ -267,11 +267,13 @@ async def extend_subscription(message: types.Message):
         days = int(args[1])
         user = await get_user(user_id)
         if not user:
-            await message.answer("❌ Пользователь не найден.")
+            await message.answer(f"❌ Пользователь с ID {user_id} не найден. Попросите его написать /start.")
             return
         new_end = datetime.datetime.utcnow() + datetime.timedelta(days=days)
         await update_subscription(user_id, new_end)
-        await message.answer(f"✅ Подписка пользователя {user_id} продлена на {days} дней.\nНовая дата окончания: {new_end.strftime('%d.%m.%Y %H:%M')}")
+        # Получаем обновлённые данные
+        updated_user = await get_user(user_id)
+        await message.answer(f"✅ Подписка пользователя {user_id} продлена на {days} дней.\nНовая дата окончания: {updated_user.subscription_end.strftime('%d.%m.%Y %H:%M')}")
     except Exception as e:
         await message.answer(f"❌ Ошибка: {e}")
 

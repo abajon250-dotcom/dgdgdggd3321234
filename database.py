@@ -133,6 +133,8 @@ async def update_subscription(tg_user_id: int, end_date: datetime.datetime):
         if user:
             user.subscription_end = end_date
             await session.commit()
+            return True
+    return False
 
 async def ban_user(tg_user_id: int):
     async with AsyncSessionLocal() as session:
