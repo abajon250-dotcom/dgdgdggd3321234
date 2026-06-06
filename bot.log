@@ -1,0 +1,1075 @@
+2026-06-06 14:42:29,275 - pyrogram.crypto.aes - INFO - Using TgCrypto
+2026-06-06 14:43:14,479 - pyrogram.crypto.aes - INFO - Using TgCrypto
+2026-06-06 14:43:48,345 - pyrogram.crypto.aes - INFO - Using TgCrypto
+2026-06-06 14:45:11,450 - pyrogram.crypto.aes - INFO - Using TgCrypto
+2026-06-06 14:45:12,348 - __main__ - INFO - Бот запущен
+2026-06-06 14:45:12,348 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 14:45:20,376 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-21' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=NameError("name 'InlineKeyboardMarkup' is not defined")>
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\handlers\subscription.py", line 30, in select_plan
+    kb = InlineKeyboardMarkup(row_width=2)
+         ^^^^^^^^^^^^^^^^^^^^
+NameError: name 'InlineKeyboardMarkup' is not defined
+2026-06-06 14:45:34,207 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 14:45:35,606 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 14:45:35,881 - telethon.client.users - INFO - Phone migrated to 5
+2026-06-06 14:45:35,934 - telethon.client.telegrambaseclient - INFO - Reconnecting to new data center 5
+2026-06-06 14:45:36,056 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.51:443/TcpFull...
+2026-06-06 14:45:36,057 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.51:443/TcpFull complete!
+2026-06-06 14:45:36,057 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 14:45:37,990 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 14:45:51,056 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 14:45:51,242 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 14:45:55,380 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 14:45:55,566 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 14:49:17,700 - pyrogram.crypto.aes - INFO - Using TgCrypto
+2026-06-06 14:50:06,374 - pyrogram.crypto.aes - INFO - Using TgCrypto
+2026-06-06 14:50:06,992 - __main__ - INFO - Бот запущен
+2026-06-06 14:50:06,992 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 14:50:22,992 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 14:50:23,176 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 14:50:24,244 - telethon.client.users - WARNING - Telegram is having internal issues AuthRestartError: Restart the authorization process (caused by SendCodeRequest)
+2026-06-06 14:50:24,430 - telethon.client.updates - INFO - Cannot get difference since the account is not logged in: AuthKeyUnregisteredError
+2026-06-06 14:50:24,431 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 14:50:24,431 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 14:50:48,158 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 14:50:48,342 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 14:50:53,780 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 14:50:53,965 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 14:50:56,064 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 14:50:56,249 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 14:50:57,843 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 14:50:57,844 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 14:53:08,702 - pyrogram.crypto.aes - INFO - Using TgCrypto
+2026-06-06 14:53:09,345 - __main__ - INFO - Бот запущен
+2026-06-06 14:53:09,346 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 14:53:20,503 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 14:53:20,686 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 14:53:21,901 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 14:53:21,902 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 14:53:27,526 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 14:53:27,709 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 14:53:28,901 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 14:53:28,902 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 14:53:31,894 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 14:53:32,079 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 14:53:34,284 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 14:53:34,285 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:06:33,301 - __main__ - INFO - Бот запущен
+2026-06-06 15:06:33,301 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 15:06:46,113 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-15' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=OperationalError('(sqlite3.OperationalError) no such column: accounts.session_string')>
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 146, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 298, in _handle_exception
+    raise error
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 128, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 125, in await_only
+    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 185, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\cursor.py", line 48, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\cursor.py", line 40, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\core.py", line 133, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\core.py", line 106, in run
+    result = function()
+             ^^^^^^^^^^
+sqlite3.OperationalError: no such column: accounts.session_string
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\handlers\accounts.py", line 22, in my_accounts
+    accounts = await get_user_accounts(callback.from_user.id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\database.py", line 136, in get_user_accounts
+    result = await session.execute(select(Account).where(Account.user_id == user.id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 455, in execute
+    result = await greenlet_spawn(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 190, in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2308, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2190, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\context.py", line 293, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\sql\elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 146, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 298, in _handle_exception
+    raise error
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 128, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 125, in await_only
+    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 185, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\cursor.py", line 48, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\cursor.py", line 40, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\core.py", line 133, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\core.py", line 106, in run
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: accounts.session_string
+[SQL: SELECT accounts.id, accounts.user_id, accounts.phone, accounts.country, accounts.first_name, accounts.last_name, accounts.username, accounts.registration_date, accounts.connected_at, accounts.contacts_count, accounts.spam_block, accounts.is_active, accounts.session_file, accounts.session_string 
+FROM accounts 
+WHERE accounts.user_id = ?]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-06 15:06:47,700 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-20' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=OperationalError('(sqlite3.OperationalError) no such column: accounts.session_string')>
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 146, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 298, in _handle_exception
+    raise error
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 128, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 125, in await_only
+    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 185, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\cursor.py", line 48, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\cursor.py", line 40, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\core.py", line 133, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\core.py", line 106, in run
+    result = function()
+             ^^^^^^^^^^
+sqlite3.OperationalError: no such column: accounts.session_string
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\handlers\accounts.py", line 22, in my_accounts
+    accounts = await get_user_accounts(callback.from_user.id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\database.py", line 136, in get_user_accounts
+    result = await session.execute(select(Account).where(Account.user_id == user.id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 455, in execute
+    result = await greenlet_spawn(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 190, in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2308, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2190, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\context.py", line 293, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\sql\elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 146, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 298, in _handle_exception
+    raise error
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 128, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 125, in await_only
+    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 185, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\cursor.py", line 48, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\cursor.py", line 40, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\core.py", line 133, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\core.py", line 106, in run
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: accounts.session_string
+[SQL: SELECT accounts.id, accounts.user_id, accounts.phone, accounts.country, accounts.first_name, accounts.last_name, accounts.username, accounts.registration_date, accounts.connected_at, accounts.contacts_count, accounts.spam_block, accounts.is_active, accounts.session_file, accounts.session_string 
+FROM accounts 
+WHERE accounts.user_id = ?]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-06 15:06:57,181 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 15:06:59,038 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:06:59,245 - telethon.client.users - INFO - Phone migrated to 5
+2026-06-06 15:06:59,296 - telethon.client.telegrambaseclient - INFO - Reconnecting to new data center 5
+2026-06-06 15:06:59,347 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.51:443/TcpFull...
+2026-06-06 15:06:59,348 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:06:59,348 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 15:07:01,300 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:07:05,439 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-55' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=TypeError("cannot pickle '_asyncio.Future' object")>
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\handlers\accounts.py", line 80, in process_code
+    data = await state.get_data()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\storage.py", line 304, in get_data
+    return await self.storage.get_data(chat=self.chat, user=self.user, default=default)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\contrib\fsm_storage\memory.py", line 45, in get_data
+    return copy.deepcopy(self.data[chat][user]['data'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 146, in deepcopy
+    y = copier(x, memo)
+        ^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 231, in _deepcopy_dict
+    y[deepcopy(key, memo)] = deepcopy(value, memo)
+                             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 172, in deepcopy
+    y = _reconstruct(x, memo, *rv)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 271, in _reconstruct
+    state = deepcopy(state, memo)
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 146, in deepcopy
+    y = copier(x, memo)
+        ^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 231, in _deepcopy_dict
+    y[deepcopy(key, memo)] = deepcopy(value, memo)
+                             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 172, in deepcopy
+    y = _reconstruct(x, memo, *rv)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 271, in _reconstruct
+    state = deepcopy(state, memo)
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 146, in deepcopy
+    y = copier(x, memo)
+        ^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 231, in _deepcopy_dict
+    y[deepcopy(key, memo)] = deepcopy(value, memo)
+                             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 146, in deepcopy
+    y = copier(x, memo)
+        ^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 206, in _deepcopy_list
+    append(deepcopy(a, memo))
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 172, in deepcopy
+    y = _reconstruct(x, memo, *rv)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 271, in _reconstruct
+    state = deepcopy(state, memo)
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 146, in deepcopy
+    y = copier(x, memo)
+        ^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 211, in _deepcopy_tuple
+    y = [deepcopy(a, memo) for a in x]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 211, in <listcomp>
+    y = [deepcopy(a, memo) for a in x]
+         ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 146, in deepcopy
+    y = copier(x, memo)
+        ^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 231, in _deepcopy_dict
+    y[deepcopy(key, memo)] = deepcopy(value, memo)
+                             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 146, in deepcopy
+    y = copier(x, memo)
+        ^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 211, in _deepcopy_tuple
+    y = [deepcopy(a, memo) for a in x]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 211, in <listcomp>
+    y = [deepcopy(a, memo) for a in x]
+         ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\copy.py", line 161, in deepcopy
+    rv = reductor(4)
+         ^^^^^^^^^^^
+TypeError: cannot pickle '_asyncio.Future' object
+2026-06-06 15:12:04,842 - __main__ - INFO - Бот запущен
+2026-06-06 15:12:04,842 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 15:12:43,319 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 15:12:44,439 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:12:44,656 - telethon.client.users - INFO - Phone migrated to 5
+2026-06-06 15:12:44,715 - telethon.client.telegrambaseclient - INFO - Reconnecting to new data center 5
+2026-06-06 15:12:44,769 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.51:443/TcpFull...
+2026-06-06 15:12:44,770 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:12:44,770 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 15:12:46,464 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:12:53,600 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 15:12:53,602 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:14:45,461 - __main__ - INFO - Бот запущен
+2026-06-06 15:14:45,462 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 15:14:50,493 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 15:14:51,950 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:14:52,158 - telethon.client.users - INFO - Phone migrated to 5
+2026-06-06 15:14:52,210 - telethon.client.telegrambaseclient - INFO - Reconnecting to new data center 5
+2026-06-06 15:14:52,261 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.51:443/TcpFull...
+2026-06-06 15:14:52,262 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:14:52,262 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 15:14:54,074 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:14:59,275 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 15:14:59,276 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:15:23,772 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 15:15:25,049 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:15:25,360 - telethon.client.users - INFO - Phone migrated to 4
+2026-06-06 15:15:25,409 - telethon.client.telegrambaseclient - INFO - Reconnecting to new data center 4
+2026-06-06 15:15:25,410 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.51:443/TcpFull...
+2026-06-06 15:15:25,410 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:15:25,410 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.91:443/TcpFull...
+2026-06-06 15:15:26,664 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.91:443/TcpFull complete!
+2026-06-06 15:15:31,502 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.91:443/TcpFull...
+2026-06-06 15:15:31,502 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.91:443/TcpFull complete!
+2026-06-06 15:18:30,054 - __main__ - INFO - Бот запущен
+2026-06-06 15:18:30,054 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 15:18:39,515 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 15:18:40,898 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:18:41,121 - telethon.client.users - INFO - Phone migrated to 4
+2026-06-06 15:18:41,175 - telethon.client.telegrambaseclient - INFO - Reconnecting to new data center 4
+2026-06-06 15:18:41,229 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.51:443/TcpFull...
+2026-06-06 15:18:41,229 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:18:41,230 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.91:443/TcpFull...
+2026-06-06 15:18:42,629 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.91:443/TcpFull complete!
+2026-06-06 15:18:45,973 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.91:443/TcpFull...
+2026-06-06 15:18:45,973 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.91:443/TcpFull complete!
+2026-06-06 15:21:31,180 - __main__ - INFO - Бот запущен
+2026-06-06 15:21:31,180 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 15:21:39,319 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 15:21:41,076 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:21:59,791 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.51:443/TcpFull...
+2026-06-06 15:21:59,792 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:22:11,499 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 15:22:13,332 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:22:13,572 - telethon.client.users - INFO - Phone migrated to 4
+2026-06-06 15:22:13,622 - telethon.client.telegrambaseclient - INFO - Reconnecting to new data center 4
+2026-06-06 15:22:13,675 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.51:443/TcpFull...
+2026-06-06 15:22:13,675 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:22:13,676 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.91:443/TcpFull...
+2026-06-06 15:22:15,005 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.91:443/TcpFull complete!
+2026-06-06 15:22:24,273 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.91:443/TcpFull...
+2026-06-06 15:22:24,274 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.91:443/TcpFull complete!
+2026-06-06 15:25:38,551 - __main__ - INFO - Бот запущен
+2026-06-06 15:25:38,551 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 15:25:54,202 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 15:25:55,346 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:25:55,556 - telethon.client.users - INFO - Phone migrated to 5
+2026-06-06 15:25:55,655 - telethon.client.telegrambaseclient - INFO - Reconnecting to new data center 5
+2026-06-06 15:25:55,707 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.51:443/TcpFull...
+2026-06-06 15:25:55,708 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:25:55,708 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 15:25:57,352 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:26:06,113 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 15:26:06,114 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:27:44,623 - __main__ - INFO - Бот запущен
+2026-06-06 15:27:44,623 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 15:27:52,271 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 15:27:53,641 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:27:53,846 - telethon.client.users - INFO - Phone migrated to 5
+2026-06-06 15:27:53,898 - telethon.client.telegrambaseclient - INFO - Reconnecting to new data center 5
+2026-06-06 15:27:53,964 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.51:443/TcpFull...
+2026-06-06 15:27:53,965 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:27:53,965 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 15:27:55,839 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:28:03,364 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 15:28:03,364 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:28:31,326 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 15:28:31,510 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:28:32,276 - utils.telethon_client - INFO - New client created from string session (hash: 1BVtsOIsBu...)
+2026-06-06 15:35:00,981 - __main__ - INFO - Бот запущен
+2026-06-06 15:35:00,981 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 15:35:42,474 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 15:35:44,283 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:35:44,569 - telethon.client.users - INFO - Phone migrated to 5
+2026-06-06 15:35:44,630 - telethon.client.telegrambaseclient - INFO - Reconnecting to new data center 5
+2026-06-06 15:35:44,693 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.51:443/TcpFull...
+2026-06-06 15:35:44,693 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:35:44,694 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 15:35:46,470 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:36:02,696 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 15:36:02,697 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:36:17,146 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 15:36:17,330 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:36:18,199 - utils.telethon_client - INFO - New client from string session
+2026-06-06 15:42:38,426 - __main__ - INFO - Бот запущен
+2026-06-06 15:42:38,426 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 15:43:08,968 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 15:43:09,152 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:44:09,815 - __main__ - INFO - Бот запущен
+2026-06-06 15:44:09,816 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 15:46:27,280 - __main__ - INFO - Бот запущен
+2026-06-06 15:46:27,280 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 15:49:39,879 - __main__ - INFO - Бот запущен
+2026-06-06 15:49:39,879 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 15:49:42,686 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-9' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=TypeError('main_menu_keyboard() takes 0 positional arguments but 1 was given')>
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\handlers\start.py", line 13, in cmd_start
+    reply_markup=main_menu_keyboard(message.from_user.id))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: main_menu_keyboard() takes 0 positional arguments but 1 was given
+2026-06-06 15:49:45,733 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-13' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=TypeError('main_menu_keyboard() takes 0 positional arguments but 1 was given')>
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\handlers\start.py", line 13, in cmd_start
+    reply_markup=main_menu_keyboard(message.from_user.id))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: main_menu_keyboard() takes 0 positional arguments but 1 was given
+2026-06-06 15:50:18,342 - __main__ - INFO - Бот запущен
+2026-06-06 15:50:18,342 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 15:53:42,290 - __main__ - INFO - Бот запущен
+2026-06-06 15:53:42,290 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 15:54:24,264 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 15:54:25,426 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:54:25,665 - telethon.client.users - INFO - Phone migrated to 5
+2026-06-06 15:54:25,715 - telethon.client.telegrambaseclient - INFO - Reconnecting to new data center 5
+2026-06-06 15:54:25,765 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.51:443/TcpFull...
+2026-06-06 15:54:25,766 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.51:443/TcpFull complete!
+2026-06-06 15:54:25,766 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 15:54:27,599 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:54:42,982 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 15:54:42,982 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:54:51,496 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 15:54:51,679 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:56:42,291 - __main__ - INFO - Бот запущен
+2026-06-06 15:56:42,291 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 15:56:53,202 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 15:56:53,385 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 15:57:05,518 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-77' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=DetachedInstanceError("Parent instance <Campaign at 0x1b5ec57ca10> is not bound to a Session; lazy load operation of attribute 'account' cannot proceed")>
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\handlers\campaigns.py", line 39, in view_campaign
+    📱 Аккаунт: {campaign.account.phone}
+                 ^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 566, in __get__
+    return self.impl.get(state, dict_)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1086, in get
+    value = self._fire_loader_callables(state, key, passive)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1121, in _fire_loader_callables
+    return self.callable_(state, passive)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 918, in _load_for_state
+    raise orm_exc.DetachedInstanceError(
+sqlalchemy.orm.exc.DetachedInstanceError: Parent instance <Campaign at 0x1b5ec57ca10> is not bound to a Session; lazy load operation of attribute 'account' cannot proceed (Background on this error at: https://sqlalche.me/e/20/bhk3)
+2026-06-06 15:57:09,278 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-82' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=DetachedInstanceError("Parent instance <Campaign at 0x1b5ec603450> is not bound to a Session; lazy load operation of attribute 'account' cannot proceed")>
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\handlers\campaigns.py", line 39, in view_campaign
+    📱 Аккаунт: {campaign.account.phone}
+                 ^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 566, in __get__
+    return self.impl.get(state, dict_)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1086, in get
+    value = self._fire_loader_callables(state, key, passive)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1121, in _fire_loader_callables
+    return self.callable_(state, passive)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 918, in _load_for_state
+    raise orm_exc.DetachedInstanceError(
+sqlalchemy.orm.exc.DetachedInstanceError: Parent instance <Campaign at 0x1b5ec603450> is not bound to a Session; lazy load operation of attribute 'account' cannot proceed (Background on this error at: https://sqlalche.me/e/20/bhk3)
+2026-06-06 15:57:10,295 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-87' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=DetachedInstanceError("Parent instance <Campaign at 0x1b5ec603910> is not bound to a Session; lazy load operation of attribute 'account' cannot proceed")>
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\handlers\campaigns.py", line 39, in view_campaign
+    📱 Аккаунт: {campaign.account.phone}
+                 ^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 566, in __get__
+    return self.impl.get(state, dict_)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1086, in get
+    value = self._fire_loader_callables(state, key, passive)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1121, in _fire_loader_callables
+    return self.callable_(state, passive)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 918, in _load_for_state
+    raise orm_exc.DetachedInstanceError(
+sqlalchemy.orm.exc.DetachedInstanceError: Parent instance <Campaign at 0x1b5ec603910> is not bound to a Session; lazy load operation of attribute 'account' cannot proceed (Background on this error at: https://sqlalche.me/e/20/bhk3)
+2026-06-06 15:57:35,542 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-93' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=DetachedInstanceError("Parent instance <Campaign at 0x1b5ec602450> is not bound to a Session; lazy load operation of attribute 'account' cannot proceed")>
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\handlers\campaigns.py", line 39, in view_campaign
+    📱 Аккаунт: {campaign.account.phone}
+                 ^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 566, in __get__
+    return self.impl.get(state, dict_)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1086, in get
+    value = self._fire_loader_callables(state, key, passive)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\attributes.py", line 1121, in _fire_loader_callables
+    return self.callable_(state, passive)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\strategies.py", line 918, in _load_for_state
+    raise orm_exc.DetachedInstanceError(
+sqlalchemy.orm.exc.DetachedInstanceError: Parent instance <Campaign at 0x1b5ec602450> is not bound to a Session; lazy load operation of attribute 'account' cannot proceed (Background on this error at: https://sqlalche.me/e/20/bhk3)
+2026-06-06 16:01:04,782 - __main__ - INFO - Бот запущен
+2026-06-06 16:01:04,782 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:01:11,420 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 16:01:11,558 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-27' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=ValueError("invalid literal for int() with base 10: 'campaign'")>
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\handlers\campaigns.py", line 210, in start_campaign_handler
+    await view_campaign(callback)
+  File "D:\telegrambot\handlers\campaigns.py", line 31, in view_campaign
+    campaign_id = int(callback.data.split("_")[1])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'campaign'
+2026-06-06 16:01:11,604 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 16:09:59,329 - __main__ - INFO - Бот запущен
+2026-06-06 16:09:59,329 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:10:05,338 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-9' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=OperationalError('(sqlite3.OperationalError) no such column: users.is_banned')>
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 146, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 298, in _handle_exception
+    raise error
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 128, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 125, in await_only
+    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 185, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\cursor.py", line 48, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\cursor.py", line 40, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\core.py", line 133, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\core.py", line 106, in run
+    result = function()
+             ^^^^^^^^^^
+sqlite3.OperationalError: no such column: users.is_banned
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\handlers\start.py", line 9, in cmd_start
+    user = await get_user(message.from_user.id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\database.py", line 112, in get_user
+    result = await session.execute(select(User).where(User.tg_user_id == tg_user_id))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 455, in execute
+    result = await greenlet_spawn(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 190, in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2308, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\session.py", line 2190, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\orm\context.py", line 293, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\sql\elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\engine\default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 146, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 298, in _handle_exception
+    raise error
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 128, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 125, in await_only
+    return current.driver.switch(awaitable)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 185, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\cursor.py", line 48, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\cursor.py", line 40, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\core.py", line 133, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiosqlite\core.py", line 106, in run
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: users.is_banned
+[SQL: SELECT users.id, users.tg_user_id, users.subscription_end, users.is_banned, users.created_at 
+FROM users 
+WHERE users.tg_user_id = ?]
+[parameters: (6484109563,)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2026-06-06 16:10:56,784 - __main__ - INFO - Бот запущен
+2026-06-06 16:10:56,784 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:15:35,982 - __main__ - INFO - Бот запущен
+2026-06-06 16:15:35,982 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:16:33,641 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 16:16:35,128 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 16:20:13,151 - __main__ - INFO - Бот запущен
+2026-06-06 16:20:13,151 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:21:25,052 - __main__ - INFO - Бот запущен
+2026-06-06 16:21:25,052 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:22:38,158 - __main__ - INFO - Бот запущен
+2026-06-06 16:22:38,158 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:23:15,230 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 16:23:16,442 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 16:23:16,800 - telethon.client.users - INFO - Phone migrated to 5
+2026-06-06 16:23:16,852 - telethon.client.telegrambaseclient - INFO - Reconnecting to new data center 5
+2026-06-06 16:23:16,904 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.51:443/TcpFull...
+2026-06-06 16:23:16,905 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.51:443/TcpFull complete!
+2026-06-06 16:23:16,905 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 16:23:18,985 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 16:23:30,562 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 16:23:30,562 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 16:24:03,243 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 16:24:04,511 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 16:24:04,714 - telethon.client.users - INFO - Phone migrated to 5
+2026-06-06 16:24:04,764 - telethon.client.telegrambaseclient - INFO - Reconnecting to new data center 5
+2026-06-06 16:24:04,764 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.51:443/TcpFull...
+2026-06-06 16:24:04,765 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.51:443/TcpFull complete!
+2026-06-06 16:24:04,765 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 16:24:06,523 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 16:24:20,744 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 16:24:20,744 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 16:24:28,105 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 16:24:28,289 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 16:25:08,783 - utils.campaign_manager - ERROR - Ошибка при отправке ProxyMTProto: Chat admin privileges are required to do that in the specified chat (for example, to send a message in a channel which is not yours), or invalid permissions used for the channel or group (caused by SendMessageRequest)
+2026-06-06 16:25:12,072 - utils.campaign_manager - ERROR - Ошибка при отправке TProxyRU: Chat admin privileges are required to do that in the specified chat (for example, to send a message in a channel which is not yours), or invalid permissions used for the channel or group (caused by SendMessageRequest)
+2026-06-06 16:25:15,361 - utils.campaign_manager - ERROR - Ошибка при отправке -1003313523767: Chat admin privileges are required to do that in the specified chat (for example, to send a message in a channel which is not yours), or invalid permissions used for the channel or group (caused by SendMessageRequest)
+2026-06-06 16:25:18,624 - utils.campaign_manager - ERROR - Ошибка при отправке -1003819166334: Chat admin privileges are required to do that in the specified chat (for example, to send a message in a channel which is not yours), or invalid permissions used for the channel or group (caused by SendMessageRequest)
+2026-06-06 16:25:25,216 - utils.campaign_manager - ERROR - Ошибка при отправке quasarspam: Chat admin privileges are required to do that in the specified chat (for example, to send a message in a channel which is not yours), or invalid permissions used for the channel or group (caused by SendMessageRequest)
+2026-06-06 16:25:31,934 - utils.campaign_manager - ERROR - Ошибка при отправке kak_ne_dvigatsa: Chat admin privileges are required to do that in the specified chat (for example, to send a message in a channel which is not yours), or invalid permissions used for the channel or group (caused by SendMessageRequest)
+2026-06-06 16:25:54,993 - utils.campaign_manager - ERROR - Ошибка при отправке hitoroflex: Chat admin privileges are required to do that in the specified chat (for example, to send a message in a channel which is not yours), or invalid permissions used for the channel or group (caused by SendMessageRequest)
+2026-06-06 16:28:53,706 - __main__ - INFO - Бот запущен
+2026-06-06 16:28:53,707 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:29:38,090 - __main__ - INFO - Бот запущен
+2026-06-06 16:29:38,091 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:30:42,527 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-35' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=ValueError("invalid literal for int() with base 10: 'campaign'")>
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\handlers\campaigns.py", line 228, in cancel_campaign_handler
+    await view_campaign(callback)
+  File "D:\telegrambot\handlers\campaigns.py", line 26, in view_campaign
+    campaign_id = int(callback.data.split("_")[1])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'campaign'
+2026-06-06 16:36:10,328 - __main__ - INFO - Бот запущен
+2026-06-06 16:36:10,328 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:37:05,653 - __main__ - INFO - Бот запущен
+2026-06-06 16:37:05,653 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:37:58,564 - __main__ - INFO - Бот запущен
+2026-06-06 16:37:58,564 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:39:10,048 - __main__ - INFO - Бот запущен
+2026-06-06 16:39:10,048 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:47:51,168 - __main__ - INFO - Бот запущен
+2026-06-06 16:47:51,168 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:50:34,043 - __main__ - INFO - Бот запущен
+2026-06-06 16:50:34,043 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:51:14,616 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 16:51:15,835 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 16:51:16,045 - telethon.client.users - INFO - Phone migrated to 5
+2026-06-06 16:51:16,097 - telethon.client.telegrambaseclient - INFO - Reconnecting to new data center 5
+2026-06-06 16:51:16,151 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.51:443/TcpFull...
+2026-06-06 16:51:16,151 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.51:443/TcpFull complete!
+2026-06-06 16:51:16,151 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 16:51:17,979 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 16:51:32,925 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 16:51:32,926 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 16:51:34,051 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 16:51:34,236 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 16:51:54,425 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-149' coro=<Dispatcher._process_polling_updates() done, defined at C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=ValueError("invalid literal for int() with base 10: 'campaign'")>
+Traceback (most recent call last):
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 283, in process_update
+    return await self.callback_query_handlers.notify(update.callback_query)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Адмін\AppData\Local\Programs\Python\Python311\Lib\site-packages\aiogram\dispatcher\handler.py", line 117, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegrambot\handlers\campaigns.py", line 210, in start_campaign_handler
+    await view_campaign(callback)
+  File "D:\telegrambot\handlers\campaigns.py", line 26, in view_campaign
+    campaign_id = int(callback.data.split("_")[1])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'campaign'
+2026-06-06 16:51:57,839 - utils.campaign_manager - ERROR - Ошибка при отправке ProxyMTProto: Chat admin privileges are required to do that in the specified chat (for example, to send a message in a channel which is not yours), or invalid permissions used for the channel or group (caused by SendMessageRequest)
+2026-06-06 16:52:01,174 - utils.campaign_manager - ERROR - Ошибка при отправке TProxyRU: Chat admin privileges are required to do that in the specified chat (for example, to send a message in a channel which is not yours), or invalid permissions used for the channel or group (caused by SendMessageRequest)
+2026-06-06 16:52:07,716 - utils.campaign_manager - ERROR - Ошибка при отправке quasarspam: Chat admin privileges are required to do that in the specified chat (for example, to send a message in a channel which is not yours), or invalid permissions used for the channel or group (caused by SendMessageRequest)
+2026-06-06 16:52:11,035 - utils.campaign_manager - ERROR - Ошибка при отправке AnuragxCricket: Chat admin privileges are required to do that in the specified chat (for example, to send a message in a channel which is not yours), or invalid permissions used for the channel or group (caused by SendMessageRequest)
+2026-06-06 16:52:20,900 - utils.campaign_manager - ERROR - Ошибка при отправке kak_ne_dvigatsa: Chat admin privileges are required to do that in the specified chat (for example, to send a message in a channel which is not yours), or invalid permissions used for the channel or group (caused by SendMessageRequest)
+2026-06-06 16:52:27,532 - utils.campaign_manager - ERROR - Ошибка при отправке hitoroflex: Chat admin privileges are required to do that in the specified chat (for example, to send a message in a channel which is not yours), or invalid permissions used for the channel or group (caused by SendMessageRequest)
+2026-06-06 16:52:40,715 - utils.campaign_manager - ERROR - Ошибка при отправке 8682262705: The specified user was deleted (caused by SendMessageRequest)
+2026-06-06 16:52:43,990 - utils.campaign_manager - ERROR - Ошибка при отправке 6097563643: The specified user was deleted (caused by SendMessageRequest)
+2026-06-06 16:52:47,244 - utils.campaign_manager - ERROR - Ошибка при отправке 8619001628: The specified user was deleted (caused by SendMessageRequest)
+2026-06-06 16:52:50,513 - utils.campaign_manager - ERROR - Ошибка при отправке 8616181395: The specified user was deleted (caused by SendMessageRequest)
+2026-06-06 16:52:53,778 - utils.campaign_manager - ERROR - Ошибка при отправке 8426214324: The specified user was deleted (caused by SendMessageRequest)
+2026-06-06 16:52:57,057 - utils.campaign_manager - ERROR - Ошибка при отправке 8354010714: The specified user was deleted (caused by SendMessageRequest)
+2026-06-06 16:53:00,329 - utils.campaign_manager - ERROR - Ошибка при отправке 8591641922: Too many requests (caused by SendMessageRequest)
+2026-06-06 16:53:03,609 - utils.campaign_manager - ERROR - Ошибка при отправке 8738285842: Too many requests (caused by SendMessageRequest)
+2026-06-06 16:53:06,952 - utils.campaign_manager - ERROR - Ошибка при отправке 8246098639: Too many requests (caused by SendMessageRequest)
+2026-06-06 16:53:10,238 - utils.campaign_manager - ERROR - Ошибка при отправке 8360602935: Too many requests (caused by SendMessageRequest)
+2026-06-06 16:53:13,531 - utils.campaign_manager - ERROR - Ошибка при отправке 8566189156: Too many requests (caused by SendMessageRequest)
+2026-06-06 16:53:16,790 - utils.campaign_manager - ERROR - Ошибка при отправке 8081752043: Too many requests (caused by SendMessageRequest)
+2026-06-06 16:53:20,235 - utils.campaign_manager - ERROR - Ошибка при отправке 8588825314: Too many requests (caused by SendMessageRequest)
+2026-06-06 16:53:23,522 - utils.campaign_manager - ERROR - Ошибка при отправке 8442408518: Too many requests (caused by SendMessageRequest)
+2026-06-06 16:53:26,788 - utils.campaign_manager - ERROR - Ошибка при отправке 8332653147: Too many requests (caused by SendMessageRequest)
+2026-06-06 16:53:30,069 - utils.campaign_manager - ERROR - Ошибка при отправке 8454457287: Too many requests (caused by SendMessageRequest)
+2026-06-06 16:53:33,356 - utils.campaign_manager - ERROR - Ошибка при отправке 8511002807: Too many requests (caused by SendMessageRequest)
+2026-06-06 16:53:36,623 - utils.campaign_manager - ERROR - Ошибка при отправке 8359958269: Too many requests (caused by SendMessageRequest)
+2026-06-06 16:53:39,906 - utils.campaign_manager - ERROR - Ошибка при отправке 8247073549: Too many requests (caused by SendMessageRequest)
+2026-06-06 16:53:43,198 - utils.campaign_manager - ERROR - Ошибка при отправке 8366217265: Too many requests (caused by SendMessageRequest)
+2026-06-06 16:53:46,496 - utils.campaign_manager - ERROR - Ошибка при отправке 8139171228: Too many requests (caused by SendMessageRequest)
+2026-06-06 16:53:49,791 - utils.campaign_manager - ERROR - Ошибка при отправке 8322456521: Too many requests (caused by SendMessageRequest)
+2026-06-06 16:54:13,323 - __main__ - INFO - Бот запущен
+2026-06-06 16:54:13,323 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:55:13,344 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 16:55:13,527 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 16:55:18,693 - telethon.network.mtprotosender - INFO - Connecting to 149.154.167.51:443/TcpFull...
+2026-06-06 16:55:20,641 - telethon.network.mtprotosender - INFO - Connection to 149.154.167.51:443/TcpFull complete!
+2026-06-06 16:55:20,922 - telethon.client.users - INFO - Phone migrated to 1
+2026-06-06 16:55:20,988 - telethon.client.telegrambaseclient - INFO - Reconnecting to new data center 1
+2026-06-06 16:55:21,043 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.167.51:443/TcpFull...
+2026-06-06 16:55:21,043 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.167.51:443/TcpFull complete!
+2026-06-06 16:55:21,044 - telethon.network.mtprotosender - INFO - Connecting to 149.154.175.58:443/TcpFull...
+2026-06-06 16:55:23,124 - telethon.network.mtprotosender - INFO - Connection to 149.154.175.58:443/TcpFull complete!
+2026-06-06 16:55:37,379 - telethon.network.mtprotosender - INFO - Disconnecting from 149.154.175.58:443/TcpFull...
+2026-06-06 16:55:37,380 - telethon.network.mtprotosender - INFO - Disconnection from 149.154.175.58:443/TcpFull complete!
+2026-06-06 16:55:51,614 - telethon.network.mtprotosender - INFO - Connecting to 149.154.175.58:443/TcpFull...
+2026-06-06 16:55:51,762 - telethon.network.mtprotosender - INFO - Connection to 149.154.175.58:443/TcpFull complete!
+2026-06-06 16:56:15,720 - telethon.client.updates - INFO - Got difference for channel 3170303601 updates
+2026-06-06 16:56:28,948 - telethon.client.updates - INFO - Got difference for channel 3170303601 updates
+2026-06-06 16:56:53,538 - telethon.client.updates - INFO - Got difference for channel 3170303601 updates
+2026-06-06 16:56:53,702 - telethon.client.updates - INFO - Got difference for channel 2616445582 updates
+2026-06-06 16:57:09,391 - telethon.client.updates - INFO - Got difference for channel 3170303601 updates
+2026-06-06 16:57:17,487 - telethon.client.updates - INFO - Got difference for channel 3170303601 updates
+2026-06-06 16:58:25,153 - __main__ - INFO - Бот запущен
+2026-06-06 16:58:25,153 - aiogram.dispatcher.dispatcher - INFO - Start polling.
+2026-06-06 16:58:39,352 - telethon.network.mtprotosender - INFO - Connecting to 149.154.175.58:443/TcpFull...
+2026-06-06 16:58:39,507 - telethon.network.mtprotosender - INFO - Connection to 149.154.175.58:443/TcpFull complete!
+2026-06-06 16:58:56,496 - telethon.client.uploads - INFO - Uploading file of 3615 bytes in 1 chunks of 131072
+2026-06-06 16:59:25,180 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 16:59:25,365 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 16:59:43,239 - telethon.client.updates - INFO - Cannot get difference since the account is not logged in: AuthKeyUnregisteredError
+2026-06-06 16:59:43,240 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 16:59:43,240 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 17:00:26,712 - utils.telethon_client - WARNING - Client disconnected, reconnecting...
+2026-06-06 17:00:26,713 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 17:00:26,896 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 17:00:27,080 - telethon.network.mtprotosender - INFO - Received error without parent request: RpcError(error_code=401, error_message='AUTH_KEY_UNREGISTERED')
+2026-06-06 17:00:27,092 - utils.telethon_client - INFO - Client reconnected successfully
+2026-06-06 17:00:27,284 - telethon.client.updates - INFO - Cannot get difference since the account is not logged in: AuthKeyUnregisteredError
+2026-06-06 17:00:27,284 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 17:00:27,284 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 17:01:27,463 - utils.telethon_client - WARNING - Client disconnected, reconnecting...
+2026-06-06 17:01:27,463 - telethon.network.mtprotosender - INFO - Connecting to 91.108.56.139:443/TcpFull...
+2026-06-06 17:01:27,648 - telethon.network.mtprotosender - INFO - Connection to 91.108.56.139:443/TcpFull complete!
+2026-06-06 17:01:27,833 - telethon.network.mtprotosender - INFO - Received error without parent request: RpcError(error_code=401, error_message='AUTH_KEY_UNREGISTERED')
+2026-06-06 17:01:27,895 - utils.telethon_client - INFO - Client reconnected successfully
+2026-06-06 17:01:28,126 - telethon.client.updates - INFO - Cannot get difference since the account is not logged in: AuthKeyUnregisteredError
+2026-06-06 17:01:28,126 - telethon.network.mtprotosender - INFO - Disconnecting from 91.108.56.139:443/TcpFull...
+2026-06-06 17:01:28,128 - telethon.network.mtprotosender - INFO - Disconnection from 91.108.56.139:443/TcpFull complete!
+2026-06-06 17:01:28,195 - utils.scheduler - WARNING - Account +91 95106 22341 became invalid
+2026-06-06 17:03:41,179 - telethon.client.updates - INFO - Got difference for channel 2616445582 updates
