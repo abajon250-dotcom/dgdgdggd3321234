@@ -19,8 +19,8 @@ def back_to_main_keyboard():
 def subscription_plans_keyboard():
     kb = InlineKeyboardMarkup(row_width=1)
     kb.add(
-        InlineKeyboardButton("1 день - 1 USD", callback_data="buy_plan:1day"),
-        InlineKeyboardButton("7 дней - 4 USD", callback_data="buy_plan:7days"),
+        InlineKeyboardButton("1 день - 0.5 USD", callback_data="buy_plan:1day"),
+        InlineKeyboardButton("7 дней - 3 USD", callback_data="buy_plan:7days"),
         InlineKeyboardButton("30 дней - 12 USD", callback_data="buy_plan:30days"),
         InlineKeyboardButton("◀️ Назад", callback_data="main_menu")
     )
