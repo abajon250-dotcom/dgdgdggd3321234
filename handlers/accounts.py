@@ -183,12 +183,20 @@ async def process_code(message: types.Message, state: FSMContext):
         await message.answer("Сессия потеряна. Начните заново.")
         await state.finish()
         return
+
+    # Убеждаемся, что клиент подключён
+    if not client.is_connected():
+        await client.connect()
+
     try:
         await client.sign_in(phone, code, phone_code_hash=phone_code_hash)
         session_string = client.session.save()
+        # Отключаем только после сохранения
         await client.disconnect()
-        del temp_clients[message.from_user.id]
+        if message.from_user.id in temp_clients:
+            del temp_clients[message.from_user.id]
 
+        # Создаём нового клиента из строки
         client2 = await get_client_from_string(session_string)
         user_info = await get_full_user_info(client2)
         dialogs_count = await get_dialogs_count(client2)
@@ -243,11 +251,17 @@ async def process_password(message: types.Message, state: FSMContext):
         await message.answer("Сессия потеряна. Начните заново.")
         await state.finish()
         return
+
+    # Проверяем подключение
+    if not client.is_connected():
+        await client.connect()
+
     try:
         await client.sign_in(password=password)
         session_string = client.session.save()
         await client.disconnect()
-        del temp_clients[message.from_user.id]
+        if message.from_user.id in temp_clients:
+            del temp_clients[message.from_user.id]
 
         client2 = await get_client_from_string(session_string)
         user_info = await get_full_user_info(client2)
