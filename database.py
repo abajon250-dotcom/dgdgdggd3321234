@@ -1,24 +1,11 @@
 import datetime
 import json
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey, Text, Float
+from sqlalchemy import BigInteger, Column, Integer, String, DateTime, Boolean, ForeignKey, Text, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, relationship, selectinload
 from sqlalchemy import select, update, delete
 from config import DATABASE_URL
-from sqlalchemy.pool import NullPool
-
-# Для PostgreSQL нужно использовать пул с переподключением
-engine = create_async_engine(
-    DATABASE_URL,
-    echo=False,
-    pool_size=5,
-    max_overflow=10,
-    pool_timeout=30,
-    pool_recycle=3600,
-    pool_pre_ping=True   # важно для Railway
-)
-AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 Base = declarative_base()
 
@@ -26,7 +13,7 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    tg_user_id = Column(Integer, unique=True, nullable=False)
+    tg_user_id = Column(BigInteger, unique=True, nullable=False)   # ← изменено
     subscription_end = Column(DateTime, nullable=True)
     is_banned = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
@@ -37,7 +24,7 @@ class User(Base):
 class Account(Base):
     __tablename__ = 'accounts'
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    user_id = Column(BigInteger, ForeignKey('users.id'), nullable=False)   # ← изменено
     phone = Column(String, nullable=False)
     country = Column(String)
     first_name = Column(String)
@@ -56,7 +43,7 @@ class Account(Base):
 class Template(Base):
     __tablename__ = 'templates'
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    user_id = Column(BigInteger, ForeignKey('users.id'), nullable=False)   # ← изменено
     name = Column(String, nullable=False)
     text = Column(Text, nullable=False)
     delay = Column(Integer, default=0)
@@ -65,7 +52,7 @@ class Template(Base):
 class Campaign(Base):
     __tablename__ = 'campaigns'
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    user_id = Column(BigInteger, ForeignKey('users.id'), nullable=False)   # ← изменено
     account_id = Column(Integer, ForeignKey('accounts.id'), nullable=False)
     name = Column(String)
     status = Column(String, default='pending')
@@ -85,7 +72,7 @@ class Campaign(Base):
 class Payment(Base):
     __tablename__ = 'payments'
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    user_id = Column(BigInteger, ForeignKey('users.id'), nullable=False)   # ← изменено
     amount = Column(Float)
     currency = Column(String, default='USD')
     payment_system = Column(String)
@@ -107,9 +94,21 @@ class PromoCode(Base):
     days = Column(Integer, nullable=False)
     max_uses = Column(Integer, default=1)
     used_count = Column(Integer, default=0)
-    created_by = Column(Integer, ForeignKey('users.id'), nullable=True)
+    created_by = Column(BigInteger, ForeignKey('users.id'), nullable=True)   # ← изменено
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     expires_at = Column(DateTime, nullable=True)
+
+# ---------- Engine и сессия ----------
+engine = create_async_engine(
+    DATABASE_URL,
+    echo=False,
+    pool_size=5,
+    max_overflow=10,
+    pool_timeout=30,
+    pool_recycle=3600,
+    pool_pre_ping=True
+)
+AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 async def init_db():
     async with engine.begin() as conn:
