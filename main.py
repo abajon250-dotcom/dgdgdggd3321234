@@ -1,12 +1,10 @@
 import asyncio
 import datetime
-import os
-from aiohttp import web
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.middlewares import BaseMiddleware
 from aiogram.dispatcher.handler import CancelHandler
-from config import BOT_TOKEN, ADMIN_IDS, WEBHOOK_URL, WEBHOOK_PATH
+from config import BOT_TOKEN, ADMIN_IDS
 from database import init_db, get_user
 from utils.scheduler import start_scheduler
 from utils.helpers import check_channel_subscription
@@ -23,7 +21,6 @@ logger = get_logger(__name__)
 
 class SubscriptionMiddleware(BaseMiddleware):
     async def on_process_message(self, message: types.Message, data: dict):
-        # Команды, которые не требуют проверки
         if message.text and message.text.startswith(('/start', '/admin', '/reset_campaign', '/extend', '/broadcast', '/promo', '/setchannel', '/unsetchannel', '/subscribe')):
             return
         user_id = message.from_user.id
@@ -78,23 +75,17 @@ async def main():
     handlers.account_actions.register_handlers(dp)
     handlers.admin.register_handlers(dp)
 
+    # Удаляем предыдущий вебхук, если был
+    await bot.delete_webhook()
+
     asyncio.create_task(start_scheduler())
 
-    if WEBHOOK_URL:
-        await bot.delete_webhook()
-        await bot.set_webhook(WEBHOOK_URL)
-        app = web.Application()
-        app.router.add_post(WEBHOOK_PATH, dp.webhook_handler())
-        runner = web.AppRunner(app)
-        await runner.setup()
-        port = int(os.getenv("PORT", 8080))
-        site = web.TCPSite(runner, host="0.0.0.0", port=port)
-        await site.start()
-        logger.info(f"Bot started with webhook on {WEBHOOK_URL}")
-        await asyncio.Event().wait()
-    else:
-        logger.info("Bot started with polling")
+    logger.info("Бот запущен в режиме polling")
+    try:
         await dp.start_polling()
+    finally:
+        await bot.close()
+        logger.info("Бот остановлен")
 
 if __name__ == "__main__":
     asyncio.run(main())
