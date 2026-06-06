@@ -9,8 +9,8 @@ from utils.payment import create_cryptobot_invoice, check_cryptobot_payment
 from keyboards.inline import subscription_plans_keyboard, back_to_main_keyboard
 
 PLANS = {
-    "1day": {"days": 1, "price": 0.5},
-    "7days": {"days": 7, "price": 3},
+    "1day": {"days": 1, "price": 1},
+    "7days": {"days": 7, "price": 4},
     "30days": {"days": 30, "price": 12}
 }
 
@@ -27,10 +27,14 @@ async def select_plan(callback: types.CallbackQuery, state: FSMContext):
     plan_key = callback.data.split(":")[1]
     plan = PLANS[plan_key]
     await state.update_data(plan=plan_key, amount=plan["price"])
-    # Создаём инвойс в CryptoBot
-    invoice = await create_cryptobot_invoice(plan["price"], "USD", f"Subscription {plan['days']} days")
+    # Убеждаемся, что пользователь существует в БД
+    user = await get_user(callback.from_user.id)
+    if not user:
+        user = await create_user(callback.from_user.id)
+    # Создаём счёт в CryptoBot
+    invoice = await create_cryptobot_invoice(plan["price"], "USD", f"Подписка на {plan['days']} дней")
     if invoice:
-        await add_payment(callback.from_user.id, plan["price"], "cryptobot", str(invoice["id"]))
+        await add_payment(user.id, plan["price"], "cryptobot", str(invoice["id"]))
         kb = InlineKeyboardMarkup()
         kb.add(InlineKeyboardButton("✅ Проверить оплату", callback_data=f"check_cryptobot:{invoice['id']}:{plan_key}"))
         kb.add(InlineKeyboardButton("◀️ Назад", callback_data="subscription_info"))
@@ -40,6 +44,27 @@ async def select_plan(callback: types.CallbackQuery, state: FSMContext):
         )
     else:
         await callback.answer("Ошибка создания счёта. Попробуйте позже.", show_alert=True)
+
+async def pay_cryptobot(callback: types.CallbackQuery, state: FSMContext):
+    # Этот обработчик может быть вызван, если вы вынесли создание счёта отдельно
+    data = await state.get_data()
+    amount = data["amount"]
+    plan_key = data["plan"]
+    user = await get_user(callback.from_user.id)
+    if not user:
+        user = await create_user(callback.from_user.id)
+    invoice = await create_cryptobot_invoice(amount, "USD", f"Подписка на {PLANS[plan_key]['days']} дней")
+    if invoice:
+        await add_payment(user.id, amount, "cryptobot", str(invoice["id"]))
+        kb = InlineKeyboardMarkup()
+        kb.add(InlineKeyboardButton("✅ Проверить оплату", callback_data=f"check_cryptobot:{invoice['id']}:{plan_key}"))
+        kb.add(InlineKeyboardButton("◀️ Назад", callback_data="subscription_info"))
+        await callback.message.edit_text(
+            f"💳 Счёт создан!\nСумма: {amount} USD\nСсылка для оплаты: {invoice['link']}\n\nПосле оплаты нажмите «Проверить оплату».",
+            reply_markup=kb
+        )
+    else:
+        await callback.answer("Ошибка создания счёта", show_alert=True)
 
 async def check_cryptobot_payment_handler(callback: types.CallbackQuery):
     invoice_id = callback.data.split(":")[1]
@@ -54,7 +79,17 @@ async def check_cryptobot_payment_handler(callback: types.CallbackQuery):
     else:
         await callback.answer("Оплата не найдена или ещё не обработана. Попробуйте позже.", show_alert=True)
 
+# Для Xrocket – если нужно, допишите аналогично
+async def pay_xrocket(callback: types.CallbackQuery, state: FSMContext):
+    await callback.answer("Xrocket пока не интегрирован. Используйте CryptoBot.", show_alert=True)
+
+async def check_xrocket_payment_handler(callback: types.CallbackQuery):
+    await callback.answer("Xrocket пока не интегрирован.", show_alert=True)
+
 def register_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(subscription_info, text="subscription_info")
     dp.register_callback_query_handler(select_plan, Text(startswith="buy_plan:"))
+    dp.register_callback_query_handler(pay_cryptobot, text="pay_cryptobot")
+    dp.register_callback_query_handler(pay_xrocket, text="pay_xrocket")
     dp.register_callback_query_handler(check_cryptobot_payment_handler, Text(startswith="check_cryptobot:"))
+    dp.register_callback_query_handler(check_xrocket_payment_handler, Text(startswith="check_xrocket:"))
