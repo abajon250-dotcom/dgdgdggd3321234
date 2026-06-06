@@ -123,17 +123,20 @@ async def send_message_by_id(client: TelegramClient, chat_id: int, text: str):
 
 # --- ТОЛЬКО КОНТАКТЫ (люди, не чаты) ---
 async def get_contacts_list(client: TelegramClient):
-    """Возвращает только реальные контакты (пользователей из адресной книги)"""
+    """Получает список контактов (пользователей) через get_dialogs с фильтрацией по is_user."""
     await _ensure_connected(client)
-    contacts = await client.get_contacts()   # метод существует в telethon>=1.34
+    dialogs = await client.get_dialogs()
     result = []
-    for c in contacts:
-        result.append({
-            "id": c.id,
-            "username": c.username if c.username else None,
-            "first_name": c.first_name or "",
-            "last_name": c.last_name or ""
-        })
+    for d in dialogs:
+        # d.is_user означает, что это личный диалог с пользователем (не группа/канал)
+        if d.is_user:
+            user = d.entity
+            result.append({
+                "id": user.id,
+                "username": user.username if user.username else None,
+                "first_name": user.first_name or "",
+                "last_name": user.last_name or ""
+            })
     return result
 
 async def get_chats_list(client: TelegramClient):
