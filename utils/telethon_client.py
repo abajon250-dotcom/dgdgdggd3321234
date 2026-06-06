@@ -50,7 +50,6 @@ async def get_client_by_account(account):
     else:
         raise ValueError("Нет данных сессии")
 
-# Для обратной совместимости (используется в некоторых старых хендлерах)
 async def get_client(session_file: str, api_id: int = API_ID, api_hash: str = API_HASH):
     return await get_client_from_file(session_file, api_id, api_hash)
 
@@ -122,16 +121,31 @@ async def send_message_by_id(client: TelegramClient, chat_id: int, text: str):
     await _ensure_connected(client)
     await client.send_message(chat_id, text)
 
+# --- ТОЛЬКО КОНТАКТЫ (люди, не чаты) ---
 async def get_contacts_list(client: TelegramClient):
+    """Возвращает только реальные контакты (пользователей из адресной книги)"""
     await _ensure_connected(client)
-    contacts = await client.get_contacts()
-    return [{"id": c.id, "username": c.username, "first_name": c.first_name} for c in contacts]
+    contacts = await client.get_contacts()   # метод существует в telethon>=1.34
+    result = []
+    for c in contacts:
+        result.append({
+            "id": c.id,
+            "username": c.username if c.username else None,
+            "first_name": c.first_name or "",
+            "last_name": c.last_name or ""
+        })
+    return result
 
 async def get_chats_list(client: TelegramClient):
+    """Возвращает чаты (группы, каналы) – для других целей, не для рассылки"""
     await _ensure_connected(client)
     dialogs = await client.get_dialogs()
     result = []
     for d in dialogs:
         if d.is_group or d.is_channel:
-            result.append({"id": d.id, "title": d.name, "username": d.entity.username if hasattr(d.entity, 'username') else None})
+            result.append({
+                "id": d.id,
+                "title": d.name,
+                "username": d.entity.username if hasattr(d.entity, 'username') else None
+            })
     return result
