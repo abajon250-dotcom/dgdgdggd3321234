@@ -9,8 +9,8 @@ from utils.payment import create_cryptobot_invoice, check_cryptobot_payment
 from keyboards.inline import subscription_plans_keyboard, back_to_main_keyboard
 
 PLANS = {
-    "1day": {"days": 1, "price": 1},
-    "7days": {"days": 7, "price": 4},
+    "1day": {"days": 1, "price": 0.5},
+    "7days": {"days": 7, "price": 3},
     "30days": {"days": 30, "price": 12}
 }
 
