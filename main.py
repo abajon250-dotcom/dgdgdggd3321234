@@ -21,6 +21,7 @@ logger = get_logger(__name__)
 
 class SubscriptionMiddleware(BaseMiddleware):
     async def on_process_message(self, message: types.Message, data: dict):
+        # Команды, которые не требуют проверки (включая /subscribe)
         if message.text and message.text.startswith(('/start', '/admin', '/reset_campaign', '/extend', '/broadcast', '/promo', '/setchannel', '/unsetchannel', '/subscribe')):
             return
         user_id = message.from_user.id
@@ -33,15 +34,18 @@ class SubscriptionMiddleware(BaseMiddleware):
         if user.is_banned:
             await message.answer("❌ Аккаунт заблокирован.")
             raise CancelHandler()
+        # Проверка платной подписки (работает для всех сообщений, кроме исключений выше)
         if not user.subscription_end or user.subscription_end < datetime.datetime.utcnow():
-            await message.answer("❌ Платная подписка истекла. Продлите её через раздел «Подписка».")
+            await message.answer("❌ Ваша платная подписка истекла. Продлите её через раздел «Подписка».")
             raise CancelHandler()
+        # Проверка канала
         if not await check_channel_subscription(user_id):
             await message.answer(f"❌ Вы не подписаны на канал @quantixtg. Подпишитесь, чтобы пользоваться ботом.")
             raise CancelHandler()
 
     async def on_process_callback_query(self, call: types.CallbackQuery, data: dict):
-        if call.data.startswith(('admin_', 'buy_plan', 'pay_cryptobot', 'pay_xrocket', 'check_cryptobot', 'check_xrocket')):
+        # Исключения для подписки, навигации и админки
+        if call.data.startswith(('admin_', 'subscription_info', 'buy_plan', 'pay_cryptobot', 'pay_xrocket', 'check_cryptobot', 'check_xrocket', 'main_menu', 'back_to_main')):
             return
         user_id = call.from_user.id
         if user_id in ADMIN_IDS:
@@ -53,6 +57,7 @@ class SubscriptionMiddleware(BaseMiddleware):
         if user.is_banned:
             await call.answer("❌ Вы заблокированы", show_alert=True)
             raise CancelHandler()
+        # Проверка платной подписки (работает для всех callback'ов, кроме исключений)
         if not user.subscription_end or user.subscription_end < datetime.datetime.utcnow():
             await call.answer("❌ Подписка истекла", show_alert=True)
             raise CancelHandler()
@@ -75,9 +80,7 @@ async def main():
     handlers.account_actions.register_handlers(dp)
     handlers.admin.register_handlers(dp)
 
-    # Удаляем предыдущий вебхук, если был
     await bot.delete_webhook()
-
     asyncio.create_task(start_scheduler())
 
     logger.info("Бот запущен в режиме polling")
