@@ -50,7 +50,7 @@ async def get_client_by_account(account):
     else:
         raise ValueError("Нет данных сессии")
 
-# Для обратной совместимости (используется в старом коде)
+# Для обратной совместимости (используется в некоторых старых хендлерах)
 async def get_client(session_file: str, api_id: int = API_ID, api_hash: str = API_HASH):
     return await get_client_from_file(session_file, api_id, api_hash)
 

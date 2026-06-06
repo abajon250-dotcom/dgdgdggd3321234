@@ -1,15 +1,17 @@
 import asyncio
 import datetime
+import logging
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.middlewares import BaseMiddleware
 from aiogram.dispatcher.handler import CancelHandler
-from config import BOT_TOKEN, ADMIN_IDS
+from aiohttp import web
+import sys
+from config import BOT_TOKEN, ADMIN_IDS, WEBHOOK_URL, WEBHOOK_PATH
 from database import init_db, get_user
 from utils.scheduler import start_scheduler
 from utils.helpers import check_channel_subscription
 from utils.logger import get_logger
-from utils.gif_sender import send_gif  # добавим позже
 import handlers.start
 import handlers.subscription
 import handlers.accounts
@@ -20,9 +22,9 @@ import handlers.admin
 
 logger = get_logger(__name__)
 
+# ---------- Middleware ----------
 class SubscriptionMiddleware(BaseMiddleware):
     async def on_process_message(self, message: types.Message, data: dict):
-        # Команды, которые не требуют проверки
         if message.text and message.text.startswith(('/start', '/admin', '/reset_campaign', '/extend', '/broadcast', '/promo', '/setchannel', '/unsetchannel')):
             return
         user_id = message.from_user.id
@@ -30,22 +32,16 @@ class SubscriptionMiddleware(BaseMiddleware):
             return
         user = await get_user(user_id)
         if not user:
-            await send_gif(message, "error")  # гифка при ошибке
             await message.answer("❌ Пользователь не найден. Напишите /start")
             raise CancelHandler()
         if user.is_banned:
-            await send_gif(message, "ban")
-            await message.answer("❌ Ваш аккаунт заблокирован.")
+            await message.answer("❌ Аккаунт заблокирован.")
             raise CancelHandler()
-        # Проверка платной подписки
         if not user.subscription_end or user.subscription_end < datetime.datetime.utcnow():
-            await send_gif(message, "subscription_expired")
-            await message.answer("❌ Платная подписка истекла. Продлите её в разделе «Подписка».")
+            await message.answer("❌ Платная подписка истекла.")
             raise CancelHandler()
-        # Проверка подписки на канал
         if not await check_channel_subscription(user_id):
-            await send_gif(message, "channel_required")
-            await message.answer(f"❌ Вы не подписаны на канал @quantixtg. Подпишитесь, чтобы пользоваться ботом.")
+            await message.answer("❌ Подпишитесь на канал @quantixtg.")
             raise CancelHandler()
 
     async def on_process_callback_query(self, call: types.CallbackQuery, data: dict):
@@ -65,15 +61,33 @@ class SubscriptionMiddleware(BaseMiddleware):
             await call.answer("❌ Подписка истекла", show_alert=True)
             raise CancelHandler()
         if not await check_channel_subscription(user_id):
-            await call.answer("❌ Вы не подписаны на канал @quantixtg", show_alert=True)
+            await call.answer("❌ Подпишитесь на канал", show_alert=True)
             raise CancelHandler()
 
-async def main():
+# ---------- Вебхук (для Railway) ----------
+async def on_startup(dp: Dispatcher):
     await init_db()
+    if WEBHOOK_URL:
+        await dp.bot.set_webhook(WEBHOOK_URL)
+        logger.info(f"Webhook set to {WEBHOOK_URL}")
+    else:
+        logger.info("No webhook URL, using polling")
+
+async def on_shutdown(dp: Dispatcher):
+    if WEBHOOK_URL:
+        await dp.bot.delete_webhook()
+    await dp.storage.close()
+    await dp.storage.wait_closed()
+
+# ---------- Главная функция ----------
+async def main():
     bot = Bot(token=BOT_TOKEN)
     storage = MemoryStorage()
     dp = Dispatcher(bot, storage=storage)
+
     dp.middleware.setup(SubscriptionMiddleware())
+
+    # Регистрация хендлеров
     handlers.start.register_handlers(dp)
     handlers.subscription.register_handlers(dp)
     handlers.accounts.register_handlers(dp)
@@ -81,13 +95,29 @@ async def main():
     handlers.campaigns.register_handlers(dp)
     handlers.account_actions.register_handlers(dp)
     handlers.admin.register_handlers(dp)
+
+    # Фоновые задачи
     asyncio.create_task(start_scheduler())
-    logger.info("Бот запущен")
-    try:
+
+    if WEBHOOK_URL:
+        # Запуск через webhook (Railway)
+        app = web.Application()
+        app.router.add_post(WEBHOOK_PATH, dp.webhook_handler())
+        runner = web.AppRunner(app)
+        await runner.setup()
+        site = web.TCPSite(runner, host="0.0.0.0", port=int(sys.argv[1]) if len(sys.argv) > 1 else 8080)
+        await site.start()
+        await on_startup(dp)
+        logger.info("Bot started with webhook")
+        # Держим сервер
+        await asyncio.Event().wait()
+    else:
+        # Локальный запуск через polling
+        await init_db()
         await dp.start_polling()
-    finally:
-        await bot.close()
-        logger.info("Бот остановлен")
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        logger.info("Bot stopped")

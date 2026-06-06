@@ -6,6 +6,19 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, relationship, selectinload
 from sqlalchemy import select, update, delete
 from config import DATABASE_URL
+from sqlalchemy.pool import NullPool
+
+# Для PostgreSQL нужно использовать пул с переподключением
+engine = create_async_engine(
+    DATABASE_URL,
+    echo=False,
+    pool_size=5,
+    max_overflow=10,
+    pool_timeout=30,
+    pool_recycle=3600,
+    pool_pre_ping=True   # важно для Railway
+)
+AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 Base = declarative_base()
 
@@ -97,10 +110,6 @@ class PromoCode(Base):
     created_by = Column(Integer, ForeignKey('users.id'), nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     expires_at = Column(DateTime, nullable=True)
-
-# ---------- Engine and session ----------
-engine = create_async_engine(DATABASE_URL, echo=False)
-AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 async def init_db():
     async with engine.begin() as conn:

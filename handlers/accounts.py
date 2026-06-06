@@ -83,7 +83,7 @@ async def account_detail(callback: types.CallbackQuery):
 """
     await callback.message.edit_text(text, parse_mode="Markdown", reply_markup=account_actions_keyboard(account.id))
 
-# ---------- Проверка валидности аккаунта ----------
+# ---------- Проверка валидности ----------
 async def check_account_validity(callback: types.CallbackQuery):
     account_id = int(callback.data.split("_")[2])
     account = await get_account_by_id(account_id, callback.from_user.id)
@@ -302,7 +302,7 @@ async def handle_tdata_zip(message: types.Message, state: FSMContext):
     await message.answer("Функция временно недоступна. Используйте вход по номеру телефона.")
     await state.finish()
 
-# ---------- Действия с аккаунтом (смена имени, аватара, отправка сообщений) ----------
+# ---------- Действия с аккаунтом ----------
 async def change_name_start(callback: types.CallbackQuery, state: FSMContext):
     account_id = int(callback.data.split("_")[2])
     await state.update_data(account_id=account_id)
@@ -470,7 +470,6 @@ async def write_user_message(message: types.Message, state: FSMContext):
         await message.answer(f"❌ Ошибка: {str(e)}")
     await state.finish()
 
-# ---------- Регистрация обработчиков ----------
 def register_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(my_accounts, text="my_accounts")
     dp.register_callback_query_handler(account_detail, Text(startswith="account_"))
