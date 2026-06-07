@@ -1,7 +1,5 @@
-import asyncio
-import datetime
 import os
-import glob
+import datetime
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
@@ -11,27 +9,18 @@ from telethon import TelegramClient, errors
 from telethon.sessions import StringSession
 from database import (
     get_user, get_user_accounts, add_account, get_account_by_id,
-    create_user, update_account_active_status, AsyncSessionLocal
+    create_user, update_account_active_status, delete_account
 )
 from utils.telethon_client import (
-    get_client_by_account,
-    get_client_from_string,
-    check_account_valid,
-    change_name,
-    change_avatar,
-    send_message_to_username,
-    join_chat,
-    send_message_by_id,
-    get_contacts_list,
-    get_chats_list,
-    get_dialogs_count,
-    get_full_user_info,
-    send_test_message
+    get_client_by_account, get_client_from_string, check_account_valid,
+    change_name, change_avatar, send_message_to_username, join_chat,
+    send_message_by_id, get_contacts_list, get_dialogs_count,
+    get_full_user_info, send_test_message
 )
 from keyboards.inline import accounts_list_keyboard, account_actions_keyboard, back_to_main_keyboard
-from config import SESSIONS_DIR, API_ID, API_HASH
+from config import API_ID, API_HASH, SESSIONS_DIR
 
-# Хранилище временных клиентов для процесса входа
+# Временное хранилище клиентов во время входа
 temp_clients = {}
 
 # ---------- FSM состояния ----------
@@ -58,14 +47,15 @@ class WriteUserState(StatesGroup):
     waiting_user_identifier = State()
     waiting_message = State()
 
-# ---------- Список и детали аккаунтов ----------
+# ---------- Список аккаунтов ----------
 async def my_accounts(callback: types.CallbackQuery):
     accounts = await get_user_accounts(callback.from_user.id)
     if not accounts:
-        await callback.message.edit_text("📭 У вас нет подключённых аккаунтов. Добавьте аккаунт:", reply_markup=back_to_main_keyboard())
+        await callback.message.edit_text("📭 У вас нет аккаунтов. Добавьте первый:", reply_markup=back_to_main_keyboard())
         return
     await callback.message.edit_text("📱 Ваши аккаунты:", reply_markup=accounts_list_keyboard(accounts))
 
+# ---------- Детали аккаунта ----------
 async def account_detail(callback: types.CallbackQuery):
     account_id = int(callback.data.split("_")[1])
     account = await get_account_by_id(account_id, callback.from_user.id)
@@ -90,17 +80,17 @@ async def check_account_validity(callback: types.CallbackQuery):
     if not account:
         await callback.answer("❌ Аккаунт не найден", show_alert=True)
         return
-    await callback.message.answer(f"🔄 Проверяю аккаунт {account.phone}...")
+    await callback.message.answer(f"🔄 Проверяю {account.phone}...")
     try:
         client = await get_client_by_account(account)
         if await check_account_valid(client):
             await update_account_active_status(account_id, True)
-            await callback.message.answer(f"✅ Аккаунт {account.phone} *валиден* (сессия активна).", parse_mode="Markdown")
+            await callback.message.answer(f"✅ Аккаунт {account.phone} *валиден*.", parse_mode="Markdown")
         else:
             await update_account_active_status(account_id, False)
-            await callback.message.answer(f"❌ Аккаунт {account.phone} *невалиден*. Сессия слетела, требуется переподключение.", parse_mode="Markdown")
+            await callback.message.answer(f"❌ Аккаунт {account.phone} *невалиден*. Сессия слетела, нужно переподключить.", parse_mode="Markdown")
     except Exception as e:
-        await callback.message.answer(f"⚠️ Ошибка при проверке: {str(e)[:100]}")
+        await callback.message.answer(f"⚠️ Ошибка: {str(e)[:100]}")
     await callback.answer()
 
 # ---------- Удаление аккаунта ----------
@@ -113,11 +103,10 @@ async def delete_account_confirm(callback: types.CallbackQuery):
     kb = InlineKeyboardMarkup(row_width=2)
     kb.add(
         InlineKeyboardButton("✅ Да, удалить", callback_data=f"confirm_delete_{account_id}"),
-        InlineKeyboardButton("❌ Нет, отмена", callback_data=f"account_{account_id}")
+        InlineKeyboardButton("❌ Отмена", callback_data=f"account_{account_id}")
     )
     await callback.message.edit_text(
-        f"⚠️ Вы уверены, что хотите удалить аккаунт {account.phone}?\n"
-        "Это действие нельзя отменить. Сессия будет удалена.",
+        f"⚠️ Вы уверены, что хотите удалить аккаунт {account.phone}?\nЭто действие необратимо.",
         reply_markup=kb
     )
     await callback.answer()
@@ -128,25 +117,22 @@ async def delete_account_execute(callback: types.CallbackQuery):
     if not account:
         await callback.answer("❌ Аккаунт не найден", show_alert=True)
         return
-    if account.session_file:
-        session_path = os.path.join(SESSIONS_DIR, account.session_file)
-        if os.path.exists(session_path):
-            os.remove(session_path)
-    async with AsyncSessionLocal() as session:
-        await session.delete(account)
-        await session.commit()
-    await callback.message.edit_text(f"✅ Аккаунт {account.phone} успешно удалён.", reply_markup=back_to_main_keyboard())
+    # Удаление файла сессии, если он есть
+    if account.session_string:
+        pass  # session_string хранится в БД, файлов нет
+    await delete_account(account.id)
+    await callback.message.edit_text(f"✅ Аккаунт {account.phone} удалён.", reply_markup=back_to_main_keyboard())
     await callback.answer()
 
-# ---------- Добавление аккаунта через номер телефона ----------
+# ---------- Добавление аккаунта по номеру телефона ----------
 async def add_account_choice(callback: types.CallbackQuery):
     kb = InlineKeyboardMarkup(row_width=2)
     kb.add(
-        InlineKeyboardButton("📞 По номеру телефона", callback_data="add_by_phone"),
+        InlineKeyboardButton("📞 По номеру", callback_data="add_by_phone"),
         InlineKeyboardButton("📁 Из TDATA (zip)", callback_data="add_by_tdata"),
         InlineKeyboardButton("◀️ Назад", callback_data="main_menu")
     )
-    await callback.message.edit_text("Выберите способ добавления аккаунта:", reply_markup=kb)
+    await callback.message.edit_text("Выберите способ добавления:", reply_markup=kb)
 
 async def add_by_phone(callback: types.CallbackQuery, state: FSMContext):
     await callback.message.answer("Введите номер телефона в международном формате (например +380123456789):")
@@ -164,13 +150,13 @@ async def process_phone(message: types.Message, state: FSMContext):
         sent = await client.send_code_request(phone)
         await state.update_data(phone_code_hash=sent.phone_code_hash)
         temp_clients[message.from_user.id] = client
-        await message.answer("Введите код подтверждения, полученный в Telegram:")
+        await message.answer("Введите код из Telegram:")
         await AddAccountPhone.waiting_code.set()
     except errors.PhoneNumberInvalidError:
-        await message.answer("Неверный номер телефона")
+        await message.answer("❌ Неверный номер.")
         await state.finish()
     except Exception as e:
-        await message.answer(f"Ошибка: {str(e)}")
+        await message.answer(f"❌ Ошибка: {e}")
         await state.finish()
 
 async def process_code(message: types.Message, state: FSMContext):
@@ -180,23 +166,16 @@ async def process_code(message: types.Message, state: FSMContext):
     phone_code_hash = data.get("phone_code_hash")
     client = temp_clients.get(message.from_user.id)
     if not client:
-        await message.answer("Сессия потеряна. Начните заново.")
+        await message.answer("❌ Сессия потеряна. Начните заново.")
         await state.finish()
         return
-
-    # Убеждаемся, что клиент подключён
-    if not client.is_connected():
-        await client.connect()
-
     try:
         await client.sign_in(phone, code, phone_code_hash=phone_code_hash)
         session_string = client.session.save()
-        # Отключаем только после сохранения
         await client.disconnect()
-        if message.from_user.id in temp_clients:
-            del temp_clients[message.from_user.id]
+        del temp_clients[message.from_user.id]
 
-        # Создаём нового клиента из строки
+        # Получаем данные аккаунта
         client2 = await get_client_from_string(session_string)
         user_info = await get_full_user_info(client2)
         dialogs_count = await get_dialogs_count(client2)
@@ -213,30 +192,27 @@ async def process_code(message: types.Message, state: FSMContext):
             first_name=user_info['first_name'],
             last_name=user_info['last_name'],
             username=user_info['username'],
-            reg_date=None,
             contacts_count=dialogs_count,
             spam_block=spam_block,
             session_string=session_string
         )
 
         accounts = await get_user_accounts(message.from_user.id)
-        new_account = accounts[-1]
+        new_acc = accounts[-1]
         text = f"""
-📱 Аккаунт: {new_account.phone}
-🌍 Страна: {new_account.country or 'Неизвестно'}
-👤 Имя: {new_account.first_name} {new_account.last_name}
-🆔 Юзернейм: @{new_account.username if new_account.username else 'Нет'}
-📞 Кол-во контактов/чатов: {new_account.contacts_count}
-🚫 Спам-блок: {'Да' if new_account.spam_block else 'Нет'}
-🔌 Статус: {'Активен' if new_account.is_active else 'Неактивен'}
-        """
-        await message.answer(text, reply_markup=account_actions_keyboard(new_account.id))
+✅ Аккаунт добавлен!
+📱 {new_acc.phone}
+👤 {new_acc.first_name} {new_acc.last_name}
+🆔 @{new_acc.username if new_acc.username else 'Нет'}
+📞 Диалогов: {new_acc.contacts_count}
+"""
+        await message.answer(text, reply_markup=account_actions_keyboard(new_acc.id))
         await state.finish()
     except errors.SessionPasswordNeededError:
-        await message.answer("Включена двухфакторная аутентификация. Введите пароль:")
+        await message.answer("🔐 Введите пароль двухфакторной аутентификации:")
         await AddAccountPhone.waiting_password.set()
     except Exception as e:
-        await message.answer(f"Ошибка: {str(e)}")
+        await message.answer(f"❌ Ошибка: {e}")
         await state.finish()
     finally:
         if client and client.is_connected():
@@ -248,20 +224,14 @@ async def process_password(message: types.Message, state: FSMContext):
     phone = data["phone"]
     client = temp_clients.get(message.from_user.id)
     if not client:
-        await message.answer("Сессия потеряна. Начните заново.")
+        await message.answer("❌ Сессия потеряна. Начните заново.")
         await state.finish()
         return
-
-    # Проверяем подключение
-    if not client.is_connected():
-        await client.connect()
-
     try:
         await client.sign_in(password=password)
         session_string = client.session.save()
         await client.disconnect()
-        if message.from_user.id in temp_clients:
-            del temp_clients[message.from_user.id]
+        del temp_clients[message.from_user.id]
 
         client2 = await get_client_from_string(session_string)
         user_info = await get_full_user_info(client2)
@@ -279,29 +249,26 @@ async def process_password(message: types.Message, state: FSMContext):
             first_name=user_info['first_name'],
             last_name=user_info['last_name'],
             username=user_info['username'],
-            reg_date=None,
             contacts_count=dialogs_count,
             spam_block=spam_block,
             session_string=session_string
         )
 
         accounts = await get_user_accounts(message.from_user.id)
-        new_account = accounts[-1]
+        new_acc = accounts[-1]
         text = f"""
-📱 Аккаунт: {new_account.phone}
-🌍 Страна: {new_account.country or 'Неизвестно'}
-👤 Имя: {new_account.first_name} {new_account.last_name}
-🆔 Юзернейм: @{new_account.username if new_account.username else 'Нет'}
-📞 Кол-во контактов/чатов: {new_account.contacts_count}
-🚫 Спам-блок: {'Да' if new_account.spam_block else 'Нет'}
-🔌 Статус: {'Активен' if new_account.is_active else 'Неактивен'}
-        """
-        await message.answer(text, reply_markup=account_actions_keyboard(new_account.id))
+✅ Аккаунт добавлен!
+📱 {new_acc.phone}
+👤 {new_acc.first_name} {new_acc.last_name}
+🆔 @{new_acc.username if new_acc.username else 'Нет'}
+📞 Диалогов: {new_acc.contacts_count}
+"""
+        await message.answer(text, reply_markup=account_actions_keyboard(new_acc.id))
         await state.finish()
     except errors.PasswordHashInvalidError:
         await message.answer("❌ Неверный пароль. Попробуйте снова:")
     except Exception as e:
-        await message.answer(f"Ошибка: {str(e)}")
+        await message.answer(f"❌ Ошибка: {e}")
         await state.finish()
     finally:
         if client and client.is_connected():
@@ -309,14 +276,14 @@ async def process_password(message: types.Message, state: FSMContext):
 
 # ---------- Добавление через TDATA (заглушка) ----------
 async def add_by_tdata(callback: types.CallbackQuery, state: FSMContext):
-    await callback.message.answer("Функция временно недоступна. Используйте вход по номеру телефона.")
+    await callback.message.answer("Функция временно недоступна. Используйте номер телефона.")
     await state.finish()
 
 async def handle_tdata_zip(message: types.Message, state: FSMContext):
-    await message.answer("Функция временно недоступна. Используйте вход по номеру телефона.")
+    await message.answer("Функция временно недоступна.")
     await state.finish()
 
-# ---------- Действия с аккаунтом ----------
+# ---------- Смена имени ----------
 async def change_name_start(callback: types.CallbackQuery, state: FSMContext):
     account_id = int(callback.data.split("_")[2])
     await state.update_data(account_id=account_id)
@@ -342,21 +309,22 @@ async def change_name_last_name(message: types.Message, state: FSMContext):
     client = await get_client_by_account(account)
     try:
         await change_name(client, first_name, last_name)
-        await message.answer("✅ Имя успешно изменено!", reply_markup=back_to_main_keyboard())
+        await message.answer("✅ Имя изменено!", reply_markup=back_to_main_keyboard())
     except Exception as e:
-        await message.answer(f"❌ Ошибка: {str(e)}")
+        await message.answer(f"❌ Ошибка: {e}")
     await state.finish()
 
+# ---------- Смена аватара ----------
 async def change_avatar_start(callback: types.CallbackQuery, state: FSMContext):
     account_id = int(callback.data.split("_")[2])
     await state.update_data(account_id=account_id)
-    await callback.message.answer("Отправьте новое фото (как файл или обычное фото):")
+    await callback.message.answer("Отправьте новое фото (как файл или фото):")
     await ChangeAvatarState.waiting_photo.set()
     await callback.answer()
 
 async def change_avatar_photo(message: types.Message, state: FSMContext):
     if not message.photo and not message.document:
-        await message.answer("Пожалуйста, отправьте фото.")
+        await message.answer("Отправьте фото.")
         return
     data = await state.get_data()
     account_id = data['account_id']
@@ -366,9 +334,9 @@ async def change_avatar_photo(message: types.Message, state: FSMContext):
         await state.finish()
         return
     if message.photo:
-        photo = message.photo[-1]
+        file = message.photo[-1]
         file_path = f"{SESSIONS_DIR}/temp_avatar_{account_id}.jpg"
-        await photo.download(destination=file_path)
+        await file.download(destination=file_path)
     else:
         file_path = await message.document.download(destination_dir=SESSIONS_DIR)
     client = await get_client_by_account(account)
@@ -377,13 +345,14 @@ async def change_avatar_photo(message: types.Message, state: FSMContext):
         os.remove(file_path)
         await message.answer("✅ Аватар изменён!", reply_markup=back_to_main_keyboard())
     except Exception as e:
-        await message.answer(f"❌ Ошибка: {str(e)}")
+        await message.answer(f"❌ Ошибка: {e}")
     await state.finish()
 
+# ---------- Написать в группу ----------
 async def write_group_start(callback: types.CallbackQuery, state: FSMContext):
     account_id = int(callback.data.split("_")[2])
     await state.update_data(account_id=account_id)
-    await callback.message.answer("Введите username группы (например @mygroup) или invite-ссылку:")
+    await callback.message.answer("Введите username группы (например @mygroup) или ссылку:")
     await WriteGroupState.waiting_group_username.set()
     await callback.answer()
 
@@ -395,7 +364,7 @@ async def write_group_username(message: types.Message, state: FSMContext):
 async def write_group_message(message: types.Message, state: FSMContext):
     data = await state.get_data()
     account_id = data['account_id']
-    group_identifier = data['group_identifier']
+    group_id = data['group_identifier']
     text = message.text
     account = await get_account_by_id(account_id, message.from_user.id)
     if not account:
@@ -404,22 +373,23 @@ async def write_group_message(message: types.Message, state: FSMContext):
         return
     client = await get_client_by_account(account)
     try:
-        if group_identifier.startswith("https://t.me/") or group_identifier.startswith("t.me/"):
-            await join_chat(client, group_identifier)
-            username = group_identifier.split("/")[-1]
+        if group_id.startswith("https://t.me/") or group_id.startswith("t.me/"):
+            await join_chat(client, group_id)
+            username = group_id.split("/")[-1]
             await send_message_to_username(client, username, text)
         else:
-            username = group_identifier.lstrip('@')
+            username = group_id.lstrip('@')
             await send_message_to_username(client, username, text)
         await message.answer("✅ Сообщение отправлено!", reply_markup=back_to_main_keyboard())
     except errors.FloodWaitError as e:
-        await message.answer(f"⚠️ Флуд-лимит. Подождите {e.seconds} секунд.")
+        await message.answer(f"⚠️ Флуд, подождите {e.seconds} сек.")
     except errors.rpcerrorlist.ChatWriteForbiddenError:
-        await message.answer("❌ Нельзя писать в этот чат (нет прав).")
+        await message.answer("❌ Нет прав на отправку в этот чат.")
     except Exception as e:
-        await message.answer(f"❌ Ошибка: {str(e)}")
+        await message.answer(f"❌ Ошибка: {e}")
     await state.finish()
 
+# ---------- Вступить в группу/канал ----------
 async def join_chat_start(callback: types.CallbackQuery, state: FSMContext):
     account_id = int(callback.data.split("_")[2])
     await state.update_data(account_id=account_id)
@@ -439,17 +409,18 @@ async def join_chat_link(message: types.Message, state: FSMContext):
     client = await get_client_by_account(account)
     try:
         await join_chat(client, link)
-        await message.answer("✅ Вы вступили в группу/канал!", reply_markup=back_to_main_keyboard())
+        await message.answer("✅ Вы вступили в чат/канал!", reply_markup=back_to_main_keyboard())
     except errors.rpcerrorlist.ChannelInvalidError:
-        await message.answer("❌ Неверная ссылка или канал не существует.")
+        await message.answer("❌ Неверная ссылка.")
     except Exception as e:
-        await message.answer(f"❌ Ошибка: {str(e)}")
+        await message.answer(f"❌ Ошибка: {e}")
     await state.finish()
 
+# ---------- Написать пользователю ----------
 async def write_user_start(callback: types.CallbackQuery, state: FSMContext):
     account_id = int(callback.data.split("_")[2])
     await state.update_data(account_id=account_id)
-    await callback.message.answer("Введите username (например @user) или ID пользователя:")
+    await callback.message.answer("Введите username (например @user) или ID:")
     await WriteUserState.waiting_user_identifier.set()
     await callback.answer()
 
@@ -477,13 +448,14 @@ async def write_user_message(message: types.Message, state: FSMContext):
             await send_message_to_username(client, username, text)
         await message.answer("✅ Сообщение отправлено!", reply_markup=back_to_main_keyboard())
     except errors.FloodWaitError as e:
-        await message.answer(f"⚠️ Флуд-лимит. Подождите {e.seconds} секунд.")
+        await message.answer(f"⚠️ Флуд, подождите {e.seconds} сек.")
     except errors.rpcerrorlist.PeerIdInvalidError:
-        await message.answer("❌ Пользователь не найден или не может получать сообщения.")
+        await message.answer("❌ Пользователь не найден.")
     except Exception as e:
-        await message.answer(f"❌ Ошибка: {str(e)}")
+        await message.answer(f"❌ Ошибка: {e}")
     await state.finish()
 
+# ---------- Регистрация хендлеров ----------
 def register_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(my_accounts, text="my_accounts")
     dp.register_callback_query_handler(account_detail, Text(startswith="account_"))

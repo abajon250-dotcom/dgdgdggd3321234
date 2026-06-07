@@ -9,11 +9,10 @@ from config import DATABASE_URL
 
 Base = declarative_base()
 
-# ---------- Модели ----------
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    tg_user_id = Column(BigInteger, unique=True, nullable=False)   # ← изменено
+    tg_user_id = Column(BigInteger, unique=True, nullable=False)
     subscription_end = Column(DateTime, nullable=True)
     is_banned = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
@@ -24,7 +23,7 @@ class User(Base):
 class Account(Base):
     __tablename__ = 'accounts'
     id = Column(Integer, primary_key=True)
-    user_id = Column(BigInteger, ForeignKey('users.id'), nullable=False)   # ← изменено
+    user_id = Column(BigInteger, ForeignKey('users.id'), nullable=False)
     phone = Column(String, nullable=False)
     country = Column(String)
     first_name = Column(String)
@@ -35,7 +34,6 @@ class Account(Base):
     contacts_count = Column(Integer, default=0)
     spam_block = Column(Boolean, default=False)
     is_active = Column(Boolean, default=True)
-    session_file = Column(String, nullable=True)
     session_string = Column(String, nullable=True)
     user = relationship("User", back_populates="accounts")
     campaigns = relationship("Campaign", back_populates="account")
@@ -43,7 +41,7 @@ class Account(Base):
 class Template(Base):
     __tablename__ = 'templates'
     id = Column(Integer, primary_key=True)
-    user_id = Column(BigInteger, ForeignKey('users.id'), nullable=False)   # ← изменено
+    user_id = Column(BigInteger, ForeignKey('users.id'), nullable=False)
     name = Column(String, nullable=False)
     text = Column(Text, nullable=False)
     delay = Column(Integer, default=0)
@@ -52,13 +50,13 @@ class Template(Base):
 class Campaign(Base):
     __tablename__ = 'campaigns'
     id = Column(Integer, primary_key=True)
-    user_id = Column(BigInteger, ForeignKey('users.id'), nullable=False)   # ← изменено
+    user_id = Column(BigInteger, ForeignKey('users.id'), nullable=False)
     account_id = Column(Integer, ForeignKey('accounts.id'), nullable=False)
     name = Column(String)
     status = Column(String, default='pending')
     template_id = Column(Integer, ForeignKey('templates.id'), nullable=True)
     custom_text = Column(Text, nullable=True)
-    delay = Column(Integer, default=0)
+    delay = Column(Integer, default=3)
     recipients_json = Column(Text)
     total_recipients = Column(Integer, default=0)
     sent_count = Column(Integer, default=0)
@@ -72,20 +70,13 @@ class Campaign(Base):
 class Payment(Base):
     __tablename__ = 'payments'
     id = Column(Integer, primary_key=True)
-    user_id = Column(BigInteger, ForeignKey('users.id'), nullable=False)   # ← изменено
+    user_id = Column(BigInteger, ForeignKey('users.id'), nullable=False)
     amount = Column(Float)
     currency = Column(String, default='USD')
     payment_system = Column(String)
     status = Column(String, default='pending')
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     external_id = Column(String)
-    user = relationship("User")
-
-class Setting(Base):
-    __tablename__ = 'settings'
-    id = Column(Integer, primary_key=True)
-    key = Column(String, unique=True, nullable=False)
-    value = Column(String, nullable=True)
 
 class PromoCode(Base):
     __tablename__ = 'promo_codes'
@@ -94,27 +85,18 @@ class PromoCode(Base):
     days = Column(Integer, nullable=False)
     max_uses = Column(Integer, default=1)
     used_count = Column(Integer, default=0)
-    created_by = Column(BigInteger, ForeignKey('users.id'), nullable=True)   # ← изменено
+    created_by = Column(BigInteger, ForeignKey('users.id'), nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     expires_at = Column(DateTime, nullable=True)
 
-# ---------- Engine и сессия ----------
-engine = create_async_engine(
-    DATABASE_URL,
-    echo=False,
-    pool_size=5,
-    max_overflow=10,
-    pool_timeout=30,
-    pool_recycle=3600,
-    pool_pre_ping=True
-)
+engine = create_async_engine(DATABASE_URL, echo=False, pool_pre_ping=True)
 AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 async def init_db():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-# ---------- Users ----------
+# ----- Users -----
 async def get_user(tg_user_id: int):
     async with AsyncSessionLocal() as session:
         result = await session.execute(select(User).where(User.tg_user_id == tg_user_id))
@@ -155,15 +137,14 @@ async def get_all_users():
         result = await session.execute(select(User))
         return result.scalars().all()
 
-# ---------- Accounts ----------
+# ----- Accounts -----
 async def add_account(user_id: int, phone: str, country: str, first_name: str, last_name: str,
-                      username: str, reg_date: datetime.datetime, contacts_count: int, spam_block: bool,
-                      session_string: str = None, session_file: str = None):
+                      username: str, contacts_count: int, spam_block: bool, session_string: str):
     async with AsyncSessionLocal() as session:
         account = Account(
             user_id=user_id, phone=phone, country=country, first_name=first_name, last_name=last_name,
-            username=username, registration_date=reg_date, contacts_count=contacts_count,
-            spam_block=spam_block, session_string=session_string, session_file=session_file
+            username=username, registration_date=datetime.datetime.utcnow(), contacts_count=contacts_count,
+            spam_block=spam_block, session_string=session_string
         )
         session.add(account)
         await session.commit()
@@ -190,9 +171,9 @@ async def update_account_active_status(account_id: int, is_active: bool):
         await session.execute(update(Account).where(Account.id == account_id).values(is_active=is_active))
         await session.commit()
 
-async def update_account_spam_block(account_id: int, spam_block: bool):
+async def delete_account(account_id: int):
     async with AsyncSessionLocal() as session:
-        await session.execute(update(Account).where(Account.id == account_id).values(spam_block=spam_block))
+        await session.execute(delete(Account).where(Account.id == account_id))
         await session.commit()
 
 async def get_all_accounts():
@@ -200,7 +181,7 @@ async def get_all_accounts():
         result = await session.execute(select(Account))
         return result.scalars().all()
 
-# ---------- Templates ----------
+# ----- Templates -----
 async def add_template(user_id: int, name: str, text: str, delay: int):
     async with AsyncSessionLocal() as session:
         template = Template(user_id=user_id, name=name, text=text, delay=delay)
@@ -234,7 +215,7 @@ async def delete_template(template_id: int):
         await session.execute(delete(Template).where(Template.id == template_id))
         await session.commit()
 
-# ---------- Campaigns ----------
+# ----- Campaigns -----
 async def add_campaign(user_id: int, account_id: int, name: str, template_id: int, custom_text: str,
                        delay: int, recipients: list):
     recipients_json = json.dumps(recipients)
@@ -299,7 +280,7 @@ async def get_all_campaigns(limit: int = 100):
         )
         return result.scalars().all()
 
-# ---------- Payments ----------
+# ----- Payments -----
 async def add_payment(user_id: int, amount: float, payment_system: str, external_id: str):
     async with AsyncSessionLocal() as session:
         payment = Payment(user_id=user_id, amount=amount, payment_system=payment_system, external_id=external_id)
@@ -317,25 +298,7 @@ async def get_all_payments(limit: int = 100):
         result = await session.execute(select(Payment).order_by(Payment.id.desc()).limit(limit))
         return result.scalars().all()
 
-# ---------- Settings ----------
-async def get_setting(key: str, default: str = None):
-    async with AsyncSessionLocal() as session:
-        result = await session.execute(select(Setting).where(Setting.key == key))
-        setting = result.scalar_one_or_none()
-        return setting.value if setting else default
-
-async def set_setting(key: str, value: str):
-    async with AsyncSessionLocal() as session:
-        result = await session.execute(select(Setting).where(Setting.key == key))
-        setting = result.scalar_one_or_none()
-        if setting:
-            setting.value = value
-        else:
-            setting = Setting(key=key, value=value)
-            session.add(setting)
-        await session.commit()
-
-# ---------- PromoCodes ----------
+# ----- PromoCodes -----
 async def create_promo(code: str, days: int, max_uses: int = 1, expires_at: datetime.datetime = None, created_by: int = None):
     async with AsyncSessionLocal() as session:
         promo = PromoCode(code=code, days=days, max_uses=max_uses, expires_at=expires_at, created_by=created_by)
@@ -351,9 +314,7 @@ async def get_promo(code: str):
 async def use_promo(code: str):
     async with AsyncSessionLocal() as session:
         promo = await get_promo(code)
-        if not promo:
-            return None
-        if promo.max_uses <= promo.used_count:
+        if not promo or promo.max_uses <= promo.used_count:
             return None
         if promo.expires_at and promo.expires_at < datetime.datetime.utcnow():
             return None

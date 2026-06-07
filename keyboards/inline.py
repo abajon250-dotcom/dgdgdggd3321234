@@ -1,113 +1,84 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-# ---------- Главное меню ----------
 def main_menu_keyboard():
     kb = InlineKeyboardMarkup(row_width=2)
     kb.add(
-        InlineKeyboardButton("📱 Мои аккаунты", callback_data="my_accounts"),
+        InlineKeyboardButton("📱 Аккаунты", callback_data="my_accounts"),
         InlineKeyboardButton("📝 Шаблоны", callback_data="my_templates"),
         InlineKeyboardButton("🚀 Рассылки", callback_data="my_campaigns"),
         InlineKeyboardButton("💳 Подписка", callback_data="subscription_info"),
-        InlineKeyboardButton("➕ Добавить аккаунт", callback_data="add_account_choice")
+        InlineKeyboardButton("➕ Добавить", callback_data="add_account_choice")
     )
     return kb
 
-# ---------- Назад в главное меню ----------
 def back_to_main_keyboard():
     kb = InlineKeyboardMarkup()
-    kb.add(InlineKeyboardButton("◀️ В главное меню", callback_data="main_menu"))
+    kb.add(InlineKeyboardButton("◀️ Главное меню", callback_data="main_menu"))
     return kb
 
-# ---------- Подписка (выбор тарифа) ----------
-def subscription_plans_keyboard():
-    kb = InlineKeyboardMarkup(row_width=1)
-    kb.add(
-        InlineKeyboardButton("1 день - 1 USD", callback_data="buy_plan:1day"),
-        InlineKeyboardButton("7 дней - 4 USD", callback_data="buy_plan:7days"),
-        InlineKeyboardButton("30 дней - 12 USD", callback_data="buy_plan:30days"),
-        InlineKeyboardButton("◀️ Назад", callback_data="main_menu")
-    )
-    return kb
-
-# ---------- Список аккаунтов ----------
 def accounts_list_keyboard(accounts):
     kb = InlineKeyboardMarkup(row_width=1)
-    for acc in accounts:
-        status = "✅" if acc.is_active else "❌"
-        spam = "🚫" if acc.spam_block else ""
-        kb.add(InlineKeyboardButton(f"{status} {acc.phone} {spam}", callback_data=f"account_{acc.id}"))
-    kb.add(InlineKeyboardButton("➕ Добавить аккаунт", callback_data="add_account_choice"))
+    for a in accounts:
+        kb.add(InlineKeyboardButton(f"{'✅' if a.is_active else '❌'} {a.phone}", callback_data=f"account_{a.id}"))
+    kb.add(InlineKeyboardButton("➕ Добавить", callback_data="add_account_choice"))
     kb.add(InlineKeyboardButton("◀️ Назад", callback_data="main_menu"))
     return kb
 
-# ---------- Действия с аккаунтом ----------
 def account_actions_keyboard(account_id):
     kb = InlineKeyboardMarkup(row_width=2)
     kb.add(
-        InlineKeyboardButton("🔄 Проверить валидность", callback_data=f"check_valid_{account_id}"),
-        InlineKeyboardButton("🗑 Удалить аккаунт", callback_data=f"delete_account_{account_id}"),
-        InlineKeyboardButton("✏️ Сменить имя", callback_data=f"change_name_{account_id}"),
-        InlineKeyboardButton("🖼 Сменить аватар", callback_data=f"change_avatar_{account_id}"),
-        InlineKeyboardButton("💬 Написать в группу", callback_data=f"write_group_{account_id}"),
-        InlineKeyboardButton("➕ Вступить в группу/канал", callback_data=f"join_chat_{account_id}"),
-        InlineKeyboardButton("👤 Написать пользователю", callback_data=f"write_user_{account_id}"),
+        InlineKeyboardButton("🔄 Проверить", callback_data=f"check_valid_{account_id}"),
+        InlineKeyboardButton("🗑 Удалить", callback_data=f"delete_account_{account_id}"),
+        InlineKeyboardButton("✏️ Имя", callback_data=f"change_name_{account_id}"),
+        InlineKeyboardButton("🖼 Аватар", callback_data=f"change_avatar_{account_id}"),
+        InlineKeyboardButton("💬 В группу", callback_data=f"write_group_{account_id}"),
+        InlineKeyboardButton("➕ Вступить", callback_data=f"join_chat_{account_id}"),
+        InlineKeyboardButton("👤 Написать", callback_data=f"write_user_{account_id}"),
         InlineKeyboardButton("◀️ Назад", callback_data="my_accounts")
     )
     return kb
 
-# ---------- Список шаблонов ----------
 def templates_list_keyboard(templates):
     kb = InlineKeyboardMarkup(row_width=1)
-    for tpl in templates:
-        kb.add(InlineKeyboardButton(f"📄 {tpl.name}", callback_data=f"template_{tpl.id}"))
-    kb.add(InlineKeyboardButton("➕ СОЗДАТЬ ШАБЛОН", callback_data="create_template"))
+    for t in templates:
+        kb.add(InlineKeyboardButton(f"📄 {t.name}", callback_data=f"template_{t.id}"))
+    kb.add(InlineKeyboardButton("➕ Создать", callback_data="create_template"))
     kb.add(InlineKeyboardButton("◀️ Назад", callback_data="main_menu"))
     return kb
 
-# ---------- Действия с шаблоном ----------
 def template_actions_keyboard(template_id):
     kb = InlineKeyboardMarkup(row_width=2)
     kb.add(
-        InlineKeyboardButton("✏️ Редактировать", callback_data=f"edit_template_{template_id}"),
+        InlineKeyboardButton("✏️ Ред.", callback_data=f"edit_template_{template_id}"),
         InlineKeyboardButton("🗑 Удалить", callback_data=f"delete_template_{template_id}"),
         InlineKeyboardButton("◀️ Назад", callback_data="my_templates")
     )
     return kb
 
-# ---------- Список рассылок ----------
 def campaigns_list_keyboard(campaigns):
     kb = InlineKeyboardMarkup(row_width=1)
-    for camp in campaigns:
-        status_emoji = {"pending":"⏳", "running":"▶️", "paused":"⏸", "cancelled":"❌", "finished":"✅"}.get(camp.status, "❓")
-        kb.add(InlineKeyboardButton(f"{status_emoji} {camp.name or camp.id} ({camp.status})", callback_data=f"campaign_{camp.id}"))
-    kb.add(InlineKeyboardButton("➕ СОЗДАТЬ РАССЫЛКУ", callback_data="create_campaign"))
+    for c in campaigns:
+        emoji = {"pending":"⏳","running":"▶️","paused":"⏸","finished":"✅","cancelled":"❌"}.get(c.status,"❓")
+        kb.add(InlineKeyboardButton(f"{emoji} {c.name or c.id}", callback_data=f"campaign_{c.id}"))
+    kb.add(InlineKeyboardButton("➕ Создать", callback_data="create_campaign"))
     kb.add(InlineKeyboardButton("◀️ Назад", callback_data="main_menu"))
     return kb
 
-# ---------- Управление рассылкой ----------
 def campaign_control_keyboard(campaign_id, status):
     kb = InlineKeyboardMarkup(row_width=2)
     if status == "running":
-        kb.add(
-            InlineKeyboardButton("⏸ Пауза", callback_data=f"pause_campaign_{campaign_id}"),
-            InlineKeyboardButton("❌ Отменить", callback_data=f"cancel_campaign_{campaign_id}"),
-            InlineKeyboardButton("🔄 Статус", callback_data=f"status_campaign_{campaign_id}")
-        )
+        kb.add(InlineKeyboardButton("⏸ Пауза", callback_data=f"pause_campaign_{campaign_id}"))
+        kb.add(InlineKeyboardButton("❌ Отменить", callback_data=f"cancel_campaign_{campaign_id}"))
     elif status == "paused":
-        kb.add(
-            InlineKeyboardButton("▶️ Возобновить", callback_data=f"resume_campaign_{campaign_id}"),
-            InlineKeyboardButton("❌ Отменить", callback_data=f"cancel_campaign_{campaign_id}"),
-            InlineKeyboardButton("🔄 Статус", callback_data=f"status_campaign_{campaign_id}")
-        )
+        kb.add(InlineKeyboardButton("▶️ Возобновить", callback_data=f"resume_campaign_{campaign_id}"))
+        kb.add(InlineKeyboardButton("❌ Отменить", callback_data=f"cancel_campaign_{campaign_id}"))
     elif status == "pending":
-        kb.add(
-            InlineKeyboardButton("🚀 Запустить", callback_data=f"start_campaign_{campaign_id}"),
-            InlineKeyboardButton("❌ Отменить", callback_data=f"cancel_campaign_{campaign_id}")
-        )
+        kb.add(InlineKeyboardButton("🚀 Запустить", callback_data=f"start_campaign_{campaign_id}"))
+        kb.add(InlineKeyboardButton("❌ Отменить", callback_data=f"cancel_campaign_{campaign_id}"))
+    kb.add(InlineKeyboardButton("🔄 Статус", callback_data=f"status_campaign_{campaign_id}"))
     kb.add(InlineKeyboardButton("◀️ Назад", callback_data="my_campaigns"))
     return kb
 
-# ---------- Админ-панель (главная) ----------
 def admin_panel_keyboard():
     kb = InlineKeyboardMarkup(row_width=2)
     kb.add(
@@ -123,7 +94,6 @@ def admin_panel_keyboard():
     )
     return kb
 
-# ---------- Админ-панель: меню блокировки ----------
 def admin_ban_keyboard():
     kb = InlineKeyboardMarkup(row_width=2)
     kb.add(

@@ -8,29 +8,18 @@ from config import ADMIN_IDS
 
 async def cmd_start(message: types.Message, state: FSMContext):
     await state.finish()
-    user_id = message.from_user.id
-    user = await get_user(user_id)
+    user = await get_user(message.from_user.id)
     if not user:
-        user = await create_user(user_id)
+        user = await create_user(message.from_user.id)
 
-    # Проверка подписки на канал (если не админ)
-    if user_id not in ADMIN_IDS:
-        if not await check_channel_subscription(user_id):
-            await message.answer(
-                "❌ Вы не подписаны на канал @quantixtg.\n\n"
-                "👉 Подпишитесь, чтобы использовать бота:\n"
-                "🔗 https://t.me/quantixtg\n\n"
-                "После подписки нажмите /start снова."
-            )
-            return
+    if message.from_user.id not in ADMIN_IDS and not await check_channel_subscription(message.from_user.id):
+        await message.answer(f"❌ Вы не подписаны на канал. Подпишитесь: {await get_setting('required_channel')}")
+        return
 
-    await message.answer(
-        "Добро пожаловать в панель управления аккаунтами!\nВыберите действие:",
-        reply_markup=main_menu_keyboard()
-    )
+    await message.answer("🚀 Добро пожаловать! Выберите действие:", reply_markup=main_menu_keyboard())
 
 async def main_menu_callback(callback: types.CallbackQuery):
-    await callback.message.edit_text("Главное меню:", reply_markup=main_menu_keyboard())
+    await callback.message.edit_text("🚀 Главное меню:", reply_markup=main_menu_keyboard())
     await callback.answer()
 
 def register_handlers(dp: Dispatcher):

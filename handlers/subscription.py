@@ -1,95 +1,56 @@
-import datetime
-import time
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from database import get_user, update_subscription, add_payment, update_payment_status, create_user
+from database import get_user, update_subscription, add_payment, create_user
 from utils.payment import create_cryptobot_invoice, check_cryptobot_payment
-from keyboards.inline import subscription_plans_keyboard, back_to_main_keyboard
+from keyboards.inline import back_to_main_keyboard
+import datetime
 
-PLANS = {
-    "1day": {"days": 1, "price": 0.5},
-    "7days": {"days": 7, "price": 3},
-    "30days": {"days": 30, "price": 12}
-}
+PLANS = {"1day": {"days": 1, "price": 1}, "7days": {"days": 7, "price": 4}, "30days": {"days": 30, "price": 12}}
 
 async def subscription_info(callback: types.CallbackQuery):
     user = await get_user(callback.from_user.id)
     if user and user.subscription_end and user.subscription_end > datetime.datetime.utcnow():
-        days_left = (user.subscription_end - datetime.datetime.utcnow()).days
-        text = f"✅ Подписка активна до {user.subscription_end.strftime('%d.%m.%Y %H:%M')}\nОсталось дней: {days_left}\n\nВыберите тариф для продления:"
+        text = f"✅ Подписка активна до {user.subscription_end.strftime('%d.%m.%Y')}"
     else:
         text = "❌ Подписка не активна. Выберите тариф:"
-    await callback.message.edit_text(text, reply_markup=subscription_plans_keyboard())
+    kb = InlineKeyboardMarkup(row_width=1)
+    for k, v in PLANS.items():
+        kb.add(InlineKeyboardButton(f"{v['days']} дней - {v['price']} USD", callback_data=f"buy_plan:{k}"))
+    kb.add(InlineKeyboardButton("◀️ Назад", callback_data="main_menu"))
+    await callback.message.edit_text(text, reply_markup=kb)
 
-async def select_plan(callback: types.CallbackQuery, state: FSMContext):
+async def buy_plan(callback: types.CallbackQuery, state: FSMContext):
     plan_key = callback.data.split(":")[1]
     plan = PLANS[plan_key]
     await state.update_data(plan=plan_key, amount=plan["price"])
-    # Убеждаемся, что пользователь существует в БД
     user = await get_user(callback.from_user.id)
     if not user:
         user = await create_user(callback.from_user.id)
-    # Создаём счёт в CryptoBot
-    invoice = await create_cryptobot_invoice(plan["price"], "USD", f"Подписка на {plan['days']} дней")
+    invoice = await create_cryptobot_invoice(plan["price"], f"Subscription {plan['days']} days")
     if invoice:
         await add_payment(user.id, plan["price"], "cryptobot", str(invoice["id"]))
         kb = InlineKeyboardMarkup()
-        kb.add(InlineKeyboardButton("✅ Проверить оплату", callback_data=f"check_cryptobot:{invoice['id']}:{plan_key}"))
+        kb.add(InlineKeyboardButton("✅ Проверить оплату", callback_data=f"check_payment:{invoice['id']}:{plan_key}"))
         kb.add(InlineKeyboardButton("◀️ Назад", callback_data="subscription_info"))
-        await callback.message.edit_text(
-            f"💳 Счёт создан!\nСумма: {plan['price']} USD\nСсылка для оплаты: {invoice['link']}\n\nПосле оплаты нажмите «Проверить оплату».",
-            reply_markup=kb
-        )
+        await callback.message.edit_text(f"💳 Счёт создан: {invoice['link']}\nПосле оплаты нажмите кнопку.", reply_markup=kb)
     else:
-        await callback.answer("Ошибка создания счёта. Попробуйте позже.", show_alert=True)
+        await callback.answer("Ошибка", show_alert=True)
 
-async def pay_cryptobot(callback: types.CallbackQuery, state: FSMContext):
-    # Этот обработчик может быть вызван, если вы вынесли создание счёта отдельно
-    data = await state.get_data()
-    amount = data["amount"]
-    plan_key = data["plan"]
-    user = await get_user(callback.from_user.id)
-    if not user:
-        user = await create_user(callback.from_user.id)
-    invoice = await create_cryptobot_invoice(amount, "USD", f"Подписка на {PLANS[plan_key]['days']} дней")
-    if invoice:
-        await add_payment(user.id, amount, "cryptobot", str(invoice["id"]))
-        kb = InlineKeyboardMarkup()
-        kb.add(InlineKeyboardButton("✅ Проверить оплату", callback_data=f"check_cryptobot:{invoice['id']}:{plan_key}"))
-        kb.add(InlineKeyboardButton("◀️ Назад", callback_data="subscription_info"))
-        await callback.message.edit_text(
-            f"💳 Счёт создан!\nСумма: {amount} USD\nСсылка для оплаты: {invoice['link']}\n\nПосле оплаты нажмите «Проверить оплату».",
-            reply_markup=kb
-        )
-    else:
-        await callback.answer("Ошибка создания счёта", show_alert=True)
-
-async def check_cryptobot_payment_handler(callback: types.CallbackQuery):
-    invoice_id = callback.data.split(":")[1]
+async def check_payment(callback: types.CallbackQuery):
+    invoice_id = int(callback.data.split(":")[1])
     plan_key = callback.data.split(":")[2]
-    status = await check_cryptobot_payment(int(invoice_id))
+    status = await check_cryptobot_payment(invoice_id)
     if status == "paid":
         plan = PLANS[plan_key]
         new_end = datetime.datetime.utcnow() + datetime.timedelta(days=plan["days"])
         await update_subscription(callback.from_user.id, new_end)
-        await update_payment_status(invoice_id, "paid")
-        await callback.message.edit_text(f"✅ Подписка активирована до {new_end.strftime('%d.%m.%Y %H:%M')}", reply_markup=back_to_main_keyboard())
+        await callback.message.edit_text(f"✅ Подписка активирована до {new_end.strftime('%d.%m.%Y')}", reply_markup=back_to_main_keyboard())
     else:
-        await callback.answer("Оплата не найдена или ещё не обработана. Попробуйте позже.", show_alert=True)
-
-# Для Xrocket – если нужно, допишите аналогично
-async def pay_xrocket(callback: types.CallbackQuery, state: FSMContext):
-    await callback.answer("Xrocket пока не интегрирован. Используйте CryptoBot.", show_alert=True)
-
-async def check_xrocket_payment_handler(callback: types.CallbackQuery):
-    await callback.answer("Xrocket пока не интегрирован.", show_alert=True)
+        await callback.answer("Не оплачено", show_alert=True)
 
 def register_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(subscription_info, text="subscription_info")
-    dp.register_callback_query_handler(select_plan, Text(startswith="buy_plan:"))
-    dp.register_callback_query_handler(pay_cryptobot, text="pay_cryptobot")
-    dp.register_callback_query_handler(pay_xrocket, text="pay_xrocket")
-    dp.register_callback_query_handler(check_cryptobot_payment_handler, Text(startswith="check_cryptobot:"))
-    dp.register_callback_query_handler(check_xrocket_payment_handler, Text(startswith="check_xrocket:"))
+    dp.register_callback_query_handler(buy_plan, Text(startswith="buy_plan:"))
+    dp.register_callback_query_handler(check_payment, Text(startswith="check_payment:"))
