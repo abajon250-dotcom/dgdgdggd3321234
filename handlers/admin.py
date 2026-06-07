@@ -84,10 +84,13 @@ async def admin_callback(callback: types.CallbackQuery, state: FSMContext):
         await callback.message.edit_text("🔒 Управление блокировкой пользователей:", reply_markup=admin_ban_keyboard())
 
     elif action == "give_sub":
-        await give_subscription_start(callback)
+        # Переход в FSM для выдачи подписки
+        await callback.message.answer("✏️ Введите Telegram ID пользователя (целое число):")
+        await GiveSubscriptionState.waiting_user_id.set()
+        await callback.answer()
 
     elif action == "broadcast":
-        await callback.message.answer("📢 Введите текст сообщения для массовой рассылки (можно с эмодзи):")
+        await callback.message.answer("📢 Введите текст для массовой рассылки (можно с эмодзи):")
         await BroadcastState.waiting_message.set()
         await callback.answer()
 
@@ -95,14 +98,48 @@ async def admin_callback(callback: types.CallbackQuery, state: FSMContext):
         await callback.message.edit_text("Неизвестная команда", reply_markup=back_to_main_keyboard())
     await callback.answer()
 
+# ---------- Обработчики выдачи подписки через кнопки ----------
+async def give_subscription_user_id(message: types.Message, state: FSMContext):
+    try:
+        user_id = int(message.text.strip())
+        await state.update_data(target_user_id=user_id)
+        await message.answer("✏️ Введите количество дней подписки (целое число):")
+        await GiveSubscriptionState.waiting_days.set()
+    except ValueError:
+        await message.answer("❌ Неверный ID. Введите число (Telegram ID).")
+        await state.finish()
+
+async def give_subscription_days(message: types.Message, state: FSMContext):
+    try:
+        days = int(message.text.strip())
+        if days <= 0:
+            await message.answer("❌ Количество дней должно быть больше 0.")
+            return
+        data = await state.get_data()
+        target_user_id = data['target_user_id']
+        user = await get_user(target_user_id)
+        if not user:
+            await message.answer(f"❌ Пользователь с ID {target_user_id} не найден. Попросите его написать /start.")
+            await state.finish()
+            return
+        new_end = datetime.datetime.utcnow() + datetime.timedelta(days=days)
+        await update_subscription(target_user_id, new_end)
+        await message.answer(f"✅ Пользователю {target_user_id} выдана подписка на {days} дней.\nДействует до: {new_end.strftime('%d.%m.%Y %H:%M')}")
+    except Exception as e:
+        await message.answer(f"❌ Ошибка: {e}")
+    finally:
+        await state.finish()
+
 # ---------- Блокировка / разблокировка ----------
 async def ban_user_start(callback: types.CallbackQuery, state: FSMContext):
     await callback.message.answer("Введите Telegram ID пользователя для блокировки:")
     await state.set_state("wait_ban_user_id")
+    await callback.answer()
 
 async def unban_user_start(callback: types.CallbackQuery, state: FSMContext):
     await callback.message.answer("Введите Telegram ID пользователя для разблокировки:")
     await state.set_state("wait_unban_user_id")
+    await callback.answer()
 
 async def process_ban_user(message: types.Message, state: FSMContext):
     try:
@@ -122,41 +159,7 @@ async def process_unban_user(message: types.Message, state: FSMContext):
         await message.answer(f"❌ Ошибка: {e}")
     await state.finish()
 
-# ---------- Выдача подписки через кнопки ----------
-async def give_subscription_start(callback: types.CallbackQuery):
-    await callback.message.answer("Введите Telegram ID пользователя:")
-    await GiveSubscriptionState.waiting_user_id.set()
-    await callback.answer()
-
-async def give_subscription_user_id(message: types.Message, state: FSMContext):
-    try:
-        user_id = int(message.text)
-        await state.update_data(target_user_id=user_id)
-        await message.answer("Введите количество дней подписки (целое число):")
-        await GiveSubscriptionState.waiting_days.set()
-    except:
-        await message.answer("❌ Неверный ID. Попробуйте снова.")
-        await state.finish()
-
-async def give_subscription_days(message: types.Message, state: FSMContext):
-    try:
-        days = int(message.text)
-        data = await state.get_data()
-        target_user_id = data['target_user_id']
-        user = await get_user(target_user_id)
-        if not user:
-            await message.answer("❌ Пользователь не найден")
-            await state.finish()
-            return
-        new_end = datetime.datetime.utcnow() + datetime.timedelta(days=days)
-        await update_subscription(target_user_id, new_end)
-        await message.answer(f"✅ Пользователю {target_user_id} выдана подписка на {days} дней (до {new_end.strftime('%d.%m.%Y')})")
-    except Exception as e:
-        await message.answer(f"❌ Ошибка: {e}")
-    finally:
-        await state.finish()
-
-# ---------- Массовая рассылка через кнопку ----------
+# ---------- Массовая рассылка ----------
 async def broadcast_message(message: types.Message, state: FSMContext):
     text = message.text
     users = await get_all_users()
@@ -227,7 +230,7 @@ async def create_promo_expiry(message: types.Message, state: FSMContext):
     await message.answer(f"✅ Промокод `{promo.code}` создан!\nДаёт {promo.days} дней, максимум {promo.max_uses} активаций.\nДействует до: {promo.expires_at.strftime('%d.%m.%Y') if promo.expires_at else 'бессрочно'}", parse_mode="Markdown")
     await state.finish()
 
-# ---------- Команда для активации промокода пользователем ----------
+# ---------- Активация промокода пользователем ----------
 async def activate_promo(message: types.Message):
     args = message.get_args()
     if not args:
@@ -257,7 +260,7 @@ async def activate_promo(message: types.Message):
     await update_subscription(message.from_user.id, new_end)
     await message.answer(f"✅ Промокод активирован! Подписка продлена на {days} дней.\nНовая дата окончания: {new_end.strftime('%d.%m.%Y')}")
 
-# ---------- Сброс статуса рассылки (команда, но можно и кнопкой) ----------
+# ---------- Сброс рассылки (команда) ----------
 async def reset_campaign(message: types.Message):
     if message.from_user.id not in ADMIN_IDS:
         return
@@ -276,15 +279,21 @@ async def reset_campaign(message: types.Message):
 def register_handlers(dp: Dispatcher):
     dp.register_message_handler(admin_panel, Command("admin"))
     dp.register_callback_query_handler(admin_callback, Text(startswith="admin_"), state=None)
+
+    # Выдача подписки через кнопки
+    dp.register_message_handler(give_subscription_user_id, state=GiveSubscriptionState.waiting_user_id)
+    dp.register_message_handler(give_subscription_days, state=GiveSubscriptionState.waiting_days)
+
+    # Блокировка
     dp.register_callback_query_handler(ban_user_start, text="admin_ban_user")
     dp.register_callback_query_handler(unban_user_start, text="admin_unban_user")
     dp.register_message_handler(process_ban_user, state="wait_ban_user_id")
     dp.register_message_handler(process_unban_user, state="wait_unban_user_id")
 
-    dp.register_callback_query_handler(give_subscription_start, text="admin_give_sub")
-    dp.register_message_handler(give_subscription_user_id, state=GiveSubscriptionState.waiting_user_id)
-    dp.register_message_handler(give_subscription_days, state=GiveSubscriptionState.waiting_days)
+    # Массовая рассылка
+    dp.register_message_handler(broadcast_message, state=BroadcastState.waiting_message)
 
+    # Промокоды
     dp.register_callback_query_handler(promo_codes_menu, text="admin_promos")
     dp.register_callback_query_handler(create_promo_start, text="admin_create_promo")
     dp.register_message_handler(create_promo_code, state=CreatePromoState.waiting_code)
@@ -292,9 +301,8 @@ def register_handlers(dp: Dispatcher):
     dp.register_message_handler(create_promo_max_uses, state=CreatePromoState.waiting_max_uses)
     dp.register_message_handler(create_promo_expiry, state=CreatePromoState.waiting_expiry)
 
+    # Пользовательская активация промокода
     dp.register_message_handler(activate_promo, Command("promo"))
-    dp.register_message_handler(reset_campaign, Command("reset_campaign"))
 
-    # Массовая рассылка
-    dp.register_callback_query_handler(admin_callback, Text(startswith="admin_broadcast"), state=None)
-    dp.register_message_handler(broadcast_message, state=BroadcastState.waiting_message)
+    # Сброс рассылки
+    dp.register_message_handler(reset_campaign, Command("reset_campaign"))
