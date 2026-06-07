@@ -1,5 +1,6 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+# ---------- Главное меню ----------
 def main_menu_keyboard():
     kb = InlineKeyboardMarkup(row_width=2)
     kb.add(
@@ -11,21 +12,24 @@ def main_menu_keyboard():
     )
     return kb
 
+# ---------- Назад в главное меню ----------
 def back_to_main_keyboard():
     kb = InlineKeyboardMarkup()
     kb.add(InlineKeyboardButton("◀️ В главное меню", callback_data="main_menu"))
     return kb
 
+# ---------- Подписка (выбор тарифа) ----------
 def subscription_plans_keyboard():
     kb = InlineKeyboardMarkup(row_width=1)
     kb.add(
-        InlineKeyboardButton("1 день - 0.5 USD", callback_data="buy_plan:1day"),
-        InlineKeyboardButton("7 дней - 3 USD", callback_data="buy_plan:7days"),
+        InlineKeyboardButton("1 день - 1 USD", callback_data="buy_plan:1day"),
+        InlineKeyboardButton("7 дней - 4 USD", callback_data="buy_plan:7days"),
         InlineKeyboardButton("30 дней - 12 USD", callback_data="buy_plan:30days"),
         InlineKeyboardButton("◀️ Назад", callback_data="main_menu")
     )
     return kb
 
+# ---------- Список аккаунтов ----------
 def accounts_list_keyboard(accounts):
     kb = InlineKeyboardMarkup(row_width=1)
     for acc in accounts:
@@ -36,6 +40,7 @@ def accounts_list_keyboard(accounts):
     kb.add(InlineKeyboardButton("◀️ Назад", callback_data="main_menu"))
     return kb
 
+# ---------- Действия с аккаунтом ----------
 def account_actions_keyboard(account_id):
     kb = InlineKeyboardMarkup(row_width=2)
     kb.add(
@@ -50,6 +55,7 @@ def account_actions_keyboard(account_id):
     )
     return kb
 
+# ---------- Список шаблонов ----------
 def templates_list_keyboard(templates):
     kb = InlineKeyboardMarkup(row_width=1)
     for tpl in templates:
@@ -58,6 +64,7 @@ def templates_list_keyboard(templates):
     kb.add(InlineKeyboardButton("◀️ Назад", callback_data="main_menu"))
     return kb
 
+# ---------- Действия с шаблоном ----------
 def template_actions_keyboard(template_id):
     kb = InlineKeyboardMarkup(row_width=2)
     kb.add(
@@ -67,6 +74,7 @@ def template_actions_keyboard(template_id):
     )
     return kb
 
+# ---------- Список рассылок ----------
 def campaigns_list_keyboard(campaigns):
     kb = InlineKeyboardMarkup(row_width=1)
     for camp in campaigns:
@@ -76,6 +84,7 @@ def campaigns_list_keyboard(campaigns):
     kb.add(InlineKeyboardButton("◀️ Назад", callback_data="main_menu"))
     return kb
 
+# ---------- Управление рассылкой ----------
 def campaign_control_keyboard(campaign_id, status):
     kb = InlineKeyboardMarkup(row_width=2)
     if status == "running":
@@ -98,6 +107,7 @@ def campaign_control_keyboard(campaign_id, status):
     kb.add(InlineKeyboardButton("◀️ Назад", callback_data="my_campaigns"))
     return kb
 
+# ---------- Админ-панель (главная) ----------
 def admin_panel_keyboard():
     kb = InlineKeyboardMarkup(row_width=2)
     kb.add(
@@ -108,11 +118,12 @@ def admin_panel_keyboard():
         InlineKeyboardButton("🎁 Промокоды", callback_data="admin_promos"),
         InlineKeyboardButton("🔒 Блокировка", callback_data="admin_ban_menu"),
         InlineKeyboardButton("📅 Выдать подписку", callback_data="admin_give_sub"),
-        InlineKeyboardButton("📢 Массовая рассылка", callback_data="admin_broadcast"),  # <-- новая кнопка
+        InlineKeyboardButton("📢 Массовая рассылка", callback_data="admin_broadcast"),
         InlineKeyboardButton("◀️ Назад", callback_data="main_menu")
     )
     return kb
 
+# ---------- Админ-панель: меню блокировки ----------
 def admin_ban_keyboard():
     kb = InlineKeyboardMarkup(row_width=2)
     kb.add(
